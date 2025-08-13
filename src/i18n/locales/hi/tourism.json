@@ -1,0 +1,46 @@
+{
+  "title": "दुबई पर्यटन",
+  "subtitle": "दुबई भर में आकर्षण, कार्यक्रम और अनुभव खोजें",
+  "searchPlaceholder": "आकर्षण, क्षेत्र या गतिविधियों की खोज करें...",
+  "loadError": "आकर्षण लोड करने में विफल",
+  "noAttractions": "कोई आकर्षण नहीं मिला",
+  "attractions": "आकर्षण",
+  "events": "कार्यक्रम",
+  "selectDate": "एक तारीख चुनें",
+  "noEventsOnDate": "इस तारीख को कोई कार्यक्रम नहीं",
+  "free": "मुफ्त",
+  "openNow": "अभी खुला है",
+  "closedNow": "बंद",
+  "navigate": "नेविगेट करें",
+  "book": "अभी बुक करें",
+  "getDirections": "दिशा-निर्देश प्राप्त करें",
+  "bookmarkAdded": "आकर्षण सहेजा गया",
+  "bookmarkRemoved": "बुकमार्क हटाया गया",
+  "mapLegend": "मानचित्र लेजेंड",
+  "filters": {
+    "categories": "श्रेणियाँ",
+    "areas": "क्षेत्र",
+    "priceRange": "मूल्य सीमा",
+    "minRating": "न्यूनतम रेटिंग",
+    "features": "सुविधाएं"
+  },
+  "category": {
+    "landmark": "स्थलचिह्न",
+    "beach": "समुद्र तट",
+    "shopping": "खरीदारी",
+    "entertainment": "मनोरंजन",
+    "culture": "संस्कृति",
+    "dining": "भोजन",
+    "adventure": "साहसिक",
+    "family": "परिवार"
+  },
+  "eventCategory": {
+    "festival": "त्योहार",
+    "concert": "संगीत कार्यक्रम",
+    "sports": "खेल",
+    "exhibition": "प्रदर्शनी",
+    "conference": "सम्मेलन",
+    "family": "परिवार",
+    "cultural": "सांस्कृतिक"
+  }
+}

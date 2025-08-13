@@ -1,0 +1,11 @@
+{
+  "title": "ڈیش بورڈ",
+  "welcome": "خوش آمدید، {{name}}",
+  "overview": {
+    "title": "جائزہ",
+    "totalUsers": "کل صارفین",
+    "activeUsers": "فعال صارفین",
+    "newContent": "نیا مواد",
+    "pendingApproval": "منظوری کا انتظار"
+  }
+}

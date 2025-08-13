@@ -1,0 +1,39 @@
+{
+  "title": "التحديثات الحكومية",
+  "subtitle": "الإعلانات والخدمات الرسمية من الدوائر الحكومية في دبي",
+  "searchPlaceholder": "البحث في التحديثات الحكومية...",
+  "newUpdate": "تحديث جديد من {{department}}",
+  "loadError": "فشل تحميل التحديثات الحكومية",
+  "noUpdates": "لم يتم العثور على تحديثات حكومية",
+  "official": "رسمي",
+  "attachments": "المرفقات",
+  "attachmentDownloaded": "تم تنزيل {{name}}",
+  "downloadError": "فشل تنزيل المرفق",
+  "expiresOn": "ينتهي في {{date}}",
+  "filters": {
+    "departments": "الدوائر",
+    "allDepartments": "جميع الدوائر",
+    "searchDepartments": "البحث في الدوائر...",
+    "noDepartmentsFound": "لم يتم العثور على دوائر",
+    "departmentsSelected": "تم اختيار {{count}} دائرة",
+    "dateRange": "نطاق التاريخ",
+    "allDates": "جميع التواريخ",
+    "selectDateRange": "اختر نطاق التاريخ",
+    "lastWeek": "الأسبوع الماضي",
+    "lastMonth": "الشهر الماضي",
+    "lastYear": "السنة الماضية",
+    "priority": "الأولوية"
+  },
+  "category": {
+    "announcement": "إعلان",
+    "policy": "تحديث السياسة",
+    "service": "تحديث الخدمة",
+    "alert": "تنبيه"
+  },
+  "priority": {
+    "urgent": "عاجل",
+    "high": "عالي",
+    "medium": "متوسط",
+    "low": "منخفض"
+  }
+}

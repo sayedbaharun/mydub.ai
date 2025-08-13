@@ -1,0 +1,40 @@
+{
+  "title": "Government Services",
+  "subtitle": "Essential services for residents and visitors in Dubai",
+  "searchPlaceholder": "Search government services...",
+  "newUpdate": "New update from {{department}}",
+  "loadError": "Failed to load government services",
+  "noUpdates": "No government services found",
+  "all": "All",
+  "official": "Official",
+  "attachments": "Attachments",
+  "attachmentDownloaded": "Downloaded {{name}}",
+  "downloadError": "Failed to download attachment",
+  "expiresOn": "Expires on {{date}}",
+  "filters": {
+    "departments": "Departments",
+    "allDepartments": "All Departments",
+    "searchDepartments": "Search departments...",
+    "noDepartmentsFound": "No departments found",
+    "departmentsSelected": "{{count}} departments selected",
+    "dateRange": "Date Range",
+    "allDates": "All Dates",
+    "selectDateRange": "Select date range",
+    "lastWeek": "Last Week",
+    "lastMonth": "Last Month",
+    "lastYear": "Last Year",
+    "priority": "Priority"
+  },
+  "category": {
+    "announcement": "Announcement",
+    "policy": "Policy Update",
+    "service": "Service Update",
+    "alert": "Alert"
+  },
+  "priority": {
+    "urgent": "Urgent",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  }
+}

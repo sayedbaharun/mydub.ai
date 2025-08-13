@@ -1,0 +1,39 @@
+{
+  "title": "سرکاری اپ ڈیٹس",
+  "subtitle": "دبئی سرکاری محکموں کی جانب سے سرکاری اعلانات اور خدمات",
+  "searchPlaceholder": "سرکاری اپ ڈیٹس تلاش کریں...",
+  "newUpdate": "{{department}} کی جانب سے نیا اپ ڈیٹ",
+  "loadError": "سرکاری اپ ڈیٹس لوڈ کرنے میں ناکام",
+  "noUpdates": "کوئی سرکاری اپ ڈیٹ نہیں ملا",
+  "official": "سرکاری",
+  "attachments": "منسلکات",
+  "attachmentDownloaded": "{{name}} ڈاؤن لوڈ ہو گیا",
+  "downloadError": "منسلک ڈاؤن لوڈ کرنے میں ناکام",
+  "expiresOn": "{{date}} کو ختم ہو جائے گا",
+  "filters": {
+    "departments": "محکمے",
+    "allDepartments": "تمام محکمے",
+    "searchDepartments": "محکمے تلاش کریں...",
+    "noDepartmentsFound": "کوئی محکمہ نہیں ملا",
+    "departmentsSelected": "{{count}} محکمے منتخب کیے گئے",
+    "dateRange": "تاریخ کی حد",
+    "allDates": "تمام تاریخیں",
+    "selectDateRange": "تاریخ کی حد منتخب کریں",
+    "lastWeek": "پچھلا ہفتہ",
+    "lastMonth": "پچھلا مہینہ",
+    "lastYear": "پچھلا سال",
+    "priority": "ترجیح"
+  },
+  "category": {
+    "announcement": "اعلان",
+    "policy": "پالیسی اپ ڈیٹ",
+    "service": "سروس اپ ڈیٹ",
+    "alert": "انتباہ"
+  },
+  "priority": {
+    "urgent": "فوری",
+    "high": "اعلیٰ",
+    "medium": "درمیانی",
+    "low": "کم"
+  }
+}

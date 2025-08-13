@@ -1,0 +1,9 @@
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1920" height="1080" fill="#f0f9ff"/>
+    <rect width="1920" height="60" fill="#0EA5E9"/>
+    <text x="20" y="40" font-family="Arial, sans-serif" font-size="24px" font-weight="bold" fill="white">MyDub.AI</text>
+    <text x="960" y="540" font-family="Arial, sans-serif" font-size="18px" fill="#64748b" text-anchor="middle">Desktop Screenshot - 1920x1080</text>
+    <rect x="20" y="80" width="1880" height="200" fill="#e0f2fe" rx="8"/>
+    <rect x="20" y="300" width="930" height="150" fill="#e0f2fe" rx="8"/>
+    <rect x="970" y="300" width="930" height="150" fill="#e0f2fe" rx="8"/>
+  </svg>

@@ -1,0 +1,45 @@
+{
+  "title": "دبئی نیوز",
+  "subtitle": "دبئی اور یو اے ای بھر کے قابل اعتماد ذرائع سے تازہ ترین خبریں اور اپ ڈیٹس",
+  "searchPlaceholder": "خبری مضامین تلاش کریں...",
+  "newArticle": "{{source}} سے نیا مضمون",
+  "loadError": "خبری مضامین لوڈ کرنے میں ناکام",
+  "noArticles": "کوئی خبری مضمون نہیں ملا",
+  "trending": "ابھی ٹرینڈنگ",
+  "by": "از",
+  "tags": "ٹیگز",
+  "relatedArticles": "متعلقہ مضامین",
+  "noRelatedArticles": "کوئی متعلقہ مضمون نہیں ملا",
+  "readOriginal": "اصل پڑھیں",
+  "bookmark": "بک مارک",
+  "bookmarked": "بک مارک شدہ",
+  "bookmarkAdded": "مضمون بک مارک ہو گیا",
+  "bookmarkRemoved": "بک مارک ہٹا دیا گیا",
+  "aiSummary": "اے آئی خلاصہ",
+  "aiSummaryTitle": "اے آئی سے تیار کردہ خلاصہ",
+  "credibility": "اعتبار",
+  "filters": {
+    "sources": "خبروں کے ذرائع",
+    "allSources": "تمام ذرائع",
+    "searchSources": "ذرائع تلاش کریں...",
+    "noSourcesFound": "کوئی ذریعہ نہیں ملا",
+    "sourcesSelected": "{{count}} ذرائع منتخب کیے گئے",
+    "dateRange": "تاریخ کی حد",
+    "sentiment": "جذبات",
+    "videoOnly": "صرف ویڈیو"
+  },
+  "category": {
+    "local": "مقامی خبریں",
+    "business": "کاروبار",
+    "technology": "ٹیکنالوجی",
+    "sports": "کھیل",
+    "entertainment": "تفریح",
+    "lifestyle": "طرز زندگی",
+    "opinion": "رائے"
+  },
+  "sentiment": {
+    "positive": "مثبت",
+    "neutral": "غیر جانبدار",
+    "negative": "منفی"
+  }
+}

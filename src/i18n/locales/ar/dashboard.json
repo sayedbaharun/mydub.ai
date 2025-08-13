@@ -1,0 +1,77 @@
+{
+  "title": "لوحة التحكم",
+  "welcome": "مرحباً بعودتك، {{name}}",
+  "overview": {
+    "title": "نظرة عامة",
+    "totalUsers": "إجمالي المستخدمين",
+    "activeUsers": "المستخدمون النشطون",
+    "newContent": "محتوى جديد",
+    "pendingApproval": "في انتظار الموافقة"
+  },
+  "content": {
+    "title": "إدارة المحتوى",
+    "create": "إنشاء محتوى",
+    "edit": "تعديل المحتوى",
+    "delete": "حذف المحتوى",
+    "publish": "نشر",
+    "unpublish": "إلغاء النشر",
+    "approve": "موافقة",
+    "reject": "رفض",
+    "status": {
+      "draft": "مسودة",
+      "pending": "قيد المراجعة",
+      "approved": "موافق عليه",
+      "published": "منشور",
+      "rejected": "مرفوض"
+    },
+    "filters": {
+      "all": "جميع المحتوى",
+      "government": "التحديثات الحكومية",
+      "news": "المقالات الإخبارية",
+      "events": "الفعاليات",
+      "tourism": "السياحة"
+    }
+  },
+  "users": {
+    "title": "إدارة المستخدمين",
+    "search": "البحث عن المستخدمين...",
+    "role": "الدور",
+    "status": "الحالة",
+    "joined": "تاريخ الانضمام",
+    "lastActive": "آخر نشاط",
+    "actions": "الإجراءات",
+    "edit": "تعديل المستخدم",
+    "suspend": "تعليق",
+    "activate": "تفعيل",
+    "delete": "حذف المستخدم",
+    "roles": {
+      "user": "مستخدم عادي",
+      "subscriber": "مشترك",
+      "editor": "محرر",
+      "admin": "مدير"
+    },
+    "statuses": {
+      "active": "نشط",
+      "suspended": "معلق",
+      "pending": "في انتظار التحقق"
+    }
+  },
+  "analytics": {
+    "title": "التحليلات",
+    "pageViews": "مشاهدات الصفحة",
+    "uniqueVisitors": "الزوار الفريدون",
+    "avgSessionDuration": "متوسط مدة الجلسة",
+    "bounceRate": "معدل الارتداد",
+    "topContent": "المحتوى الأكثر مشاهدة",
+    "userGrowth": "نمو المستخدمين",
+    "engagement": "التفاعل"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "general": "الإعدادات العامة",
+    "notifications": "إعدادات الإشعارات",
+    "api": "تكوين API",
+    "security": "الأمان",
+    "backup": "النسخ الاحتياطي والاستعادة"
+  }
+}

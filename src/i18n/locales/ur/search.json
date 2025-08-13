@@ -1,0 +1,60 @@
+{
+  "placeholder": "Search for anything in Dubai...",
+  "filters": "Filters",
+  "suggestions": "Suggestions",
+  "recent": "Recent Searches",
+  "trending": "Trending",
+  "noResults": "No results found",
+  "tryDifferentKeywords": "Try different keywords or adjust your filters",
+  "resultsCount": "{{count}} results found",
+  "sort": {
+    "relevance": "Relevance",
+    "dateDesc": "Newest First",
+    "dateAsc": "Oldest First",
+    "popularity": "Most Popular",
+    "rating": "Highest Rated"
+  },
+  "type": {
+    "government": "Government",
+    "news": "News",
+    "tourism": "Tourism",
+    "event": "Event",
+    "business": "Business",
+    "practical": "Practical"
+  },
+  "category": {
+    "government": "Government Services",
+    "news": "News & Updates",
+    "tourism": "Tourism & Attractions",
+    "practical": "Practical Information",
+    "events": "Events",
+    "business": "Business"
+  },
+  "location": {
+    "dubai": "Dubai",
+    "abu-dhabi": "Abu Dhabi",
+    "sharjah": "Sharjah",
+    "ajman": "Ajman",
+    "ras-al-khaimah": "Ras Al Khaimah"
+  },
+  "activeFilters": "Active Filters",
+  "clearAll": "Clear All",
+  "categories": "Categories",
+  "location": "Location",
+  "allLocations": "All Locations",
+  "rating": "Rating",
+  "minimumRating": "Minimum Rating",
+  "additionalFilters": "Additional Filters",
+  "verifiedOnly": "Verified Only",
+  "withImages": "With Images",
+  "withVideos": "With Videos",
+  "verified": "Verified",
+  "showMore": "Show More",
+  "showLess": "Show Less",
+  "loading": "Loading...",
+  "loadMore": "Load More",
+  "relatedSearches": "Related Searches",
+  "error": "Search Error",
+  "errorDescription": "An error occurred while searching. Please try again.",
+  "filtersDescription": "Refine your search results"
+}

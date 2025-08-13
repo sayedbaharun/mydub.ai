@@ -1,0 +1,45 @@
+{
+  "title": "Dubai News",
+  "subtitle": "Latest news and updates from trusted sources across Dubai and the UAE",
+  "searchPlaceholder": "Search news articles...",
+  "newArticle": "New article from {{source}}",
+  "loadError": "Failed to load news articles",
+  "noArticles": "No news articles found",
+  "trending": "Trending Now",
+  "by": "by",
+  "tags": "Tags",
+  "relatedArticles": "Related Articles",
+  "noRelatedArticles": "No related articles found",
+  "readOriginal": "Read Original",
+  "bookmark": "Bookmark",
+  "bookmarked": "Bookmarked",
+  "bookmarkAdded": "Article bookmarked",
+  "bookmarkRemoved": "Bookmark removed",
+  "aiSummary": "AI Summary",
+  "aiSummaryTitle": "AI-Generated Summary",
+  "credibility": "Credibility",
+  "filters": {
+    "sources": "News Sources",
+    "allSources": "All Sources",
+    "searchSources": "Search sources...",
+    "noSourcesFound": "No sources found",
+    "sourcesSelected": "{{count}} sources selected",
+    "dateRange": "Date Range",
+    "sentiment": "Sentiment",
+    "videoOnly": "Video Only"
+  },
+  "category": {
+    "local": "Local News",
+    "business": "Business",
+    "technology": "Technology",
+    "sports": "Sports",
+    "entertainment": "Entertainment",
+    "lifestyle": "Lifestyle",
+    "opinion": "Opinion"
+  },
+  "sentiment": {
+    "positive": "Positive",
+    "neutral": "Neutral",
+    "negative": "Negative"
+  }
+}

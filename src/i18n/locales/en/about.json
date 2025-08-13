@@ -1,0 +1,67 @@
+{
+  "title": "About MyDub.AI",
+  "subtitle": "We're building the most intelligent and comprehensive platform for Dubai, powered by AI to help residents and visitors discover, navigate, and enjoy everything this incredible city has to offer.",
+  "missionTitle": "Our Mission",
+  "missionDescription": "To make Dubai more accessible, discoverable, and enjoyable for everyone through intelligent technology that understands your needs and preferences.",
+  "whatWeDoTitle": "What We Do",
+  "features": {
+    "aiAssistant": {
+      "title": "AI Assistant",
+      "description": "Our intelligent AI assistant learns from Dubai's vast array of options to provide personalized recommendations for dining, entertainment, tourism, and services."
+    },
+    "realTimeInfo": {
+      "title": "Real-Time Information",
+      "description": "Stay updated with the latest news, government announcements, events, and changes that affect life in Dubai."
+    },
+    "multiLanguage": {
+      "title": "Arabic Learning & Multi-Language",
+      "description": "Learn Arabic with our daily phrase feature showcasing 285+ essential phrases, plus full support for English, Arabic, Hindi, and Urdu with RTL text support."
+    },
+    "government": {
+      "title": "Government Integration",
+      "description": "Simplify your interactions with Dubai government services through easy access to official information and procedures."
+    }
+  },
+  "valuesTitle": "Our Values",
+  "values": {
+    "userCentric": {
+      "title": "User-Centric",
+      "description": "Everything we build is designed with our users in mind, providing value and solving real problems."
+    },
+    "innovation": {
+      "title": "Innovation",
+      "description": "We leverage cutting-edge AI technology to create intelligent, helpful experiences."
+    },
+    "trustPrivacy": {
+      "title": "Trust & Privacy",
+      "description": "Your data privacy and security are our top priorities in everything we do."
+    },
+    "accessibility": {
+      "title": "Accessibility",
+      "description": "We believe information should be accessible to everyone, in their preferred language."
+    }
+  },
+  "teamTitle": "Our Team",
+  "teamDescription": "We're a passionate team of technologists, designers, and Dubai experts working together to create the best possible experience for our users.",
+  "team": {
+    "aiTeam": {
+      "name": "AI Technology Team",
+      "role": "Artificial Intelligence & Machine Learning",
+      "description": "Building intelligent systems that understand and serve Dubai better every day."
+    },
+    "contentTeam": {
+      "name": "Content Team",
+      "role": "Local Expertise & Curation",
+      "description": "Ensuring our information is accurate, relevant, and reflects the true spirit of Dubai."
+    },
+    "designTeam": {
+      "name": "Design Team",
+      "role": "User Experience & Interface",
+      "description": "Creating beautiful, intuitive experiences that work seamlessly across all devices."
+    }
+  },
+  "joinUsTitle": "Join Our Journey",
+  "joinUsDescription": "We're always looking for talented individuals who share our passion for making Dubai more accessible through technology.",
+  "viewOpportunities": "View Opportunities",
+  "getInTouch": "Get in Touch"
+}

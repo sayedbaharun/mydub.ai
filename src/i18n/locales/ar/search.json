@@ -1,0 +1,60 @@
+{
+  "placeholder": "ابحث عن أي شيء في دبي...",
+  "filters": "الفلاتر",
+  "suggestions": "الاقتراحات",
+  "recent": "عمليات البحث الأخيرة",
+  "trending": "الأكثر بحثاً",
+  "noResults": "لم يتم العثور على نتائج",
+  "tryDifferentKeywords": "جرب كلمات مختلفة أو قم بتعديل الفلاتر",
+  "resultsCount": "تم العثور على {{count}} نتيجة",
+  "sort": {
+    "relevance": "الأكثر صلة",
+    "dateDesc": "الأحدث أولاً",
+    "dateAsc": "الأقدم أولاً",
+    "popularity": "الأكثر شعبية",
+    "rating": "الأعلى تقييماً"
+  },
+  "type": {
+    "government": "حكومي",
+    "news": "أخبار",
+    "tourism": "سياحة",
+    "event": "فعالية",
+    "business": "أعمال",
+    "practical": "معلومات عملية"
+  },
+  "category": {
+    "government": "الخدمات الحكومية",
+    "news": "الأخبار والتحديثات",
+    "tourism": "السياحة والمعالم",
+    "practical": "المعلومات العملية",
+    "events": "الفعاليات",
+    "business": "الأعمال"
+  },
+  "location": {
+    "dubai": "دبي",
+    "abu-dhabi": "أبوظبي",
+    "sharjah": "الشارقة",
+    "ajman": "عجمان",
+    "ras-al-khaimah": "رأس الخيمة"
+  },
+  "activeFilters": "الفلاتر النشطة",
+  "clearAll": "مسح الكل",
+  "categories": "الفئات",
+  "location": "الموقع",
+  "allLocations": "جميع المواقع",
+  "rating": "التقييم",
+  "minimumRating": "الحد الأدنى للتقييم",
+  "additionalFilters": "فلاتر إضافية",
+  "verifiedOnly": "المعتمد فقط",
+  "withImages": "مع صور",
+  "withVideos": "مع فيديوهات",
+  "verified": "معتمد",
+  "showMore": "عرض المزيد",
+  "showLess": "عرض أقل",
+  "loading": "جاري التحميل...",
+  "loadMore": "تحميل المزيد",
+  "relatedSearches": "عمليات بحث ذات صلة",
+  "error": "خطأ في البحث",
+  "errorDescription": "حدث خطأ أثناء البحث. يرجى المحاولة مرة أخرى.",
+  "filtersDescription": "تحسين نتائج البحث"
+}

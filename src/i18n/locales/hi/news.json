@@ -1,0 +1,45 @@
+{
+  "title": "दुबई समाचार",
+  "subtitle": "दुबई और यूएई भर के विश्वसनीय स्रोतों से नवीनतम समाचार और अपडेट",
+  "searchPlaceholder": "समाचार लेख खोजें...",
+  "newArticle": "{{source}} से नया लेख",
+  "loadError": "समाचार लेख लोड करने में विफल",
+  "noArticles": "कोई समाचार लेख नहीं मिला",
+  "trending": "अभी ट्रेंडिंग",
+  "by": "द्वारा",
+  "tags": "टैग",
+  "relatedArticles": "संबंधित लेख",
+  "noRelatedArticles": "कोई संबंधित लेख नहीं मिला",
+  "readOriginal": "मूल पढ़ें",
+  "bookmark": "बुकमार्क",
+  "bookmarked": "बुकमार्क किया गया",
+  "bookmarkAdded": "लेख बुकमार्क किया गया",
+  "bookmarkRemoved": "बुकमार्क हटाया गया",
+  "aiSummary": "एआई सारांश",
+  "aiSummaryTitle": "एआई-जनरेटेड सारांश",
+  "credibility": "विश्वसनीयता",
+  "filters": {
+    "sources": "समाचार स्रोत",
+    "allSources": "सभी स्रोत",
+    "searchSources": "स्रोत खोजें...",
+    "noSourcesFound": "कोई स्रोत नहीं मिला",
+    "sourcesSelected": "{{count}} स्रोत चुने गए",
+    "dateRange": "तारीख सीमा",
+    "sentiment": "भावना",
+    "videoOnly": "केवल वीडियो"
+  },
+  "category": {
+    "local": "स्थानीय समाचार",
+    "business": "व्यापार",
+    "technology": "प्रौद्योगिकी",
+    "sports": "खेल",
+    "entertainment": "मनोरंजन",
+    "lifestyle": "जीवनशैली",
+    "opinion": "राय"
+  },
+  "sentiment": {
+    "positive": "सकारात्मक",
+    "neutral": "तटस्थ",
+    "negative": "नकारात्मक"
+  }
+}

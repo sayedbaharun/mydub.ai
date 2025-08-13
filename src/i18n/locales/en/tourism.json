@@ -1,0 +1,49 @@
+{
+  "title": "Dubai Tourism",
+  "subtitle": "Discover attractions, events, and experiences across Dubai",
+  "searchPlaceholder": "Search attractions, areas, or activities...",
+  "loadError": "Failed to load attractions",
+  "noAttractions": "No attractions found",
+  "attractions": "Attractions",
+  "events": "Events",
+  "grid": "Grid",
+  "map": "Map",
+  "all": "All",
+  "selectDate": "Select a date",
+  "noEventsOnDate": "No events on this date",
+  "free": "Free",
+  "openNow": "Open now",
+  "closedNow": "Closed",
+  "navigate": "Navigate",
+  "book": "Book Now",
+  "getDirections": "Get Directions",
+  "bookmarkAdded": "Attraction saved",
+  "bookmarkRemoved": "Bookmark removed",
+  "mapLegend": "Map Legend",
+  "filters": {
+    "categories": "Categories",
+    "areas": "Areas",
+    "priceRange": "Price Range",
+    "minRating": "Minimum Rating",
+    "features": "Features"
+  },
+  "category": {
+    "landmark": "Landmark",
+    "beach": "Beach",
+    "shopping": "Shopping",
+    "entertainment": "Entertainment",
+    "culture": "Culture",
+    "dining": "Dining",
+    "adventure": "Adventure",
+    "family": "Family"
+  },
+  "eventCategory": {
+    "festival": "Festival",
+    "concert": "Concert",
+    "sports": "Sports",
+    "exhibition": "Exhibition",
+    "conference": "Conference",
+    "family": "Family",
+    "cultural": "Cultural"
+  }
+}

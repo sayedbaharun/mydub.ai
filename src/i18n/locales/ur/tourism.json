@@ -1,0 +1,46 @@
+{
+  "title": "دبئی سیاحت",
+  "subtitle": "دبئی بھر میں پرکشش مقامات، تقریبات اور تجربات دریافت کریں",
+  "searchPlaceholder": "پرکشش مقامات، علاقے یا سرگرمیاں تلاش کریں...",
+  "loadError": "پرکشش مقامات لوڈ کرنے میں ناکام",
+  "noAttractions": "کوئی پرکشش مقام نہیں ملا",
+  "attractions": "پرکشش مقامات",
+  "events": "تقریبات",
+  "selectDate": "تاریخ منتخب کریں",
+  "noEventsOnDate": "اس تاریخ میں کوئی تقریب نہیں",
+  "free": "مفت",
+  "openNow": "ابھی کھلا ہے",
+  "closedNow": "بند",
+  "navigate": "نیویگیٹ کریں",
+  "book": "ابھی بک کریں",
+  "getDirections": "سمت حاصل کریں",
+  "bookmarkAdded": "پرکشش مقام محفوظ ہو گیا",
+  "bookmarkRemoved": "بک مارک ہٹا دیا گیا",
+  "mapLegend": "نقشہ کی کلید",
+  "filters": {
+    "categories": "اقسام",
+    "areas": "علاقے",
+    "priceRange": "قیمت کی حد",
+    "minRating": "کم سے کم درجہ بندی",
+    "features": "خصوصیات"
+  },
+  "category": {
+    "landmark": "نشان",
+    "beach": "ساحل",
+    "shopping": "خریداری",
+    "entertainment": "تفریح",
+    "culture": "ثقافت",
+    "dining": "کھانا",
+    "adventure": "مہم جوئی",
+    "family": "خاندانی"
+  },
+  "eventCategory": {
+    "festival": "میلہ",
+    "concert": "موسیقی کنسرٹ",
+    "sports": "کھیل",
+    "exhibition": "نمائش",
+    "conference": "کانفرنس",
+    "family": "خاندانی",
+    "cultural": "ثقافتی"
+  }
+}

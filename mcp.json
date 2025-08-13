@@ -1,0 +1,310 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--service-role-key",
+        "${SUPABASE_SERVICE_ROLE_KEY}",
+        "--project-url",
+        "${VITE_SUPABASE_URL}"
+      ],
+      "env": {
+        "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}",
+        "VITE_SUPABASE_URL": "${VITE_SUPABASE_URL}"
+      }
+    },
+    "taskmanager": {
+      "command": "node",
+      "args": [
+        "/Users/sayedbaharun/Documents/mydub.ai/codeguide-vite-supabase/mcp-servers/taskmanager/dist/index.js"
+      ]
+    },
+    "openweather": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@vblagoje/openweather-mcp"
+      ],
+      "env": {
+        "OPENWEATHER_API_KEY": "your_openweather_api_key_here"
+      }
+    },
+    "ide": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-vscode"],
+      "env": {}
+    },
+    "context7-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@upstash/context7-mcp",
+        "--key",
+        "ea34176a-739d-4a97-8e8a-ce7192917000"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@adalovu/mcp-playwright",
+        "--key",
+        "ea34176a-739d-4a97-8e8a-ce7192917000"
+      ]
+    },
+    "postgresql": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@HenkDz/postgresql-mcp-server",
+        "--key",
+        "ea34176a-739d-4a97-8e8a-ce7192917000"
+      ]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@smithery-ai/server-sequential-thinking",
+        "--key",
+        "ea34176a-739d-4a97-8e8a-ce7192917000"
+      ]
+    },
+    "auth0": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@auth0/auth0-mcp-server",
+        "run"
+      ],
+      "capabilities": [
+        "tools"
+      ],
+      "env": {
+        "DEBUG": "auth0-mcp"
+      }
+    },
+    "terminal-controller": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@GongRzhe/terminal-controller-mcp",
+        "--key",
+        "ea34176a-739d-4a97-8e8a-ce7192917000"
+      ]
+    },
+    "gdrive": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-gdrive"
+      ],
+      "env": {
+        "GOOGLE_CLIENT_ID": "${GOOGLE_CLIENT_ID}",
+        "GOOGLE_CLIENT_SECRET": "${GOOGLE_CLIENT_SECRET}",
+        "GOOGLE_REDIRECT_URI": "${GOOGLE_REDIRECT_URI}"
+      }
+    },
+    "cloudflare": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@cloudflare/mcp-server-cloudflare"
+      ],
+      "env": {
+        "CLOUDFLARE_API_TOKEN": "${CLOUDFLARE_API_TOKEN}",
+        "CLOUDFLARE_ACCOUNT_ID": "${CLOUDFLARE_ACCOUNT_ID}"
+      }
+    },
+    "image-generation": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@voxellm/mcp-server-image-generation"
+      ],
+      "env": {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}"
+      }
+    },
+    "google-analytics": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-google-analytics"
+      ],
+      "env": {
+        "GOOGLE_ANALYTICS_PROPERTY_ID": "${GOOGLE_ANALYTICS_PROPERTY_ID}",
+        "GOOGLE_SERVICE_ACCOUNT_KEY": "${GOOGLE_SERVICE_ACCOUNT_KEY}"
+      }
+    },
+    "mixpanel": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mixpanel/mcp-server"
+      ],
+      "env": {
+        "MIXPANEL_TOKEN": "${MIXPANEL_TOKEN}",
+        "MIXPANEL_API_SECRET": "${MIXPANEL_API_SECRET}"
+      }
+    },
+    "segment": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@segment/mcp-server"
+      ],
+      "env": {
+        "SEGMENT_WRITE_KEY": "${SEGMENT_WRITE_KEY}"
+      }
+    },
+    "sendgrid": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@sendgrid/mcp-server"
+      ],
+      "env": {
+        "SENDGRID_API_KEY": "${SENDGRID_API_KEY}"
+      }
+    },
+    "twilio": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@twilio/mcp-server"
+      ],
+      "env": {
+        "TWILIO_ACCOUNT_SID": "${TWILIO_ACCOUNT_SID}",
+        "TWILIO_AUTH_TOKEN": "${TWILIO_AUTH_TOKEN}",
+        "TWILIO_PHONE_NUMBER": "${TWILIO_PHONE_NUMBER}"
+      }
+    },
+    "slack": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@slack/mcp-server"
+      ],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_APP_TOKEN": "${SLACK_APP_TOKEN}"
+      }
+    },
+    "deepl": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@deepl/mcp-server"
+      ],
+      "env": {
+        "DEEPL_API_KEY": "${DEEPL_API_KEY}"
+      }
+    },
+    "google-translate": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@google-cloud/mcp-server-translate"
+      ],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "${GOOGLE_APPLICATION_CREDENTIALS}"
+      }
+    },
+    "algolia": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@algolia/mcp-server"
+      ],
+      "env": {
+        "ALGOLIA_APP_ID": "${ALGOLIA_APP_ID}",
+        "ALGOLIA_API_KEY": "${ALGOLIA_API_KEY}",
+        "ALGOLIA_INDEX_NAME": "${ALGOLIA_INDEX_NAME}"
+      }
+    },
+    "redis": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@redis/mcp-server"
+      ],
+      "env": {
+        "REDIS_URL": "${REDIS_URL}"
+      }
+    },
+    "sentry": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@sentry/mcp-server"
+      ],
+      "env": {
+        "SENTRY_DSN": "${SENTRY_DSN}",
+        "SENTRY_AUTH_TOKEN": "${SENTRY_AUTH_TOKEN}"
+      }
+    },
+    "datadog": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@datadog/mcp-server"
+      ],
+      "env": {
+        "DATADOG_API_KEY": "${DATADOG_API_KEY}",
+        "DATADOG_APP_KEY": "${DATADOG_APP_KEY}"
+      }
+    },
+    "twitter": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@twitter/mcp-server"
+      ],
+      "env": {
+        "TWITTER_API_KEY": "${TWITTER_API_KEY}",
+        "TWITTER_API_SECRET": "${TWITTER_API_SECRET}",
+        "TWITTER_ACCESS_TOKEN": "${TWITTER_ACCESS_TOKEN}",
+        "TWITTER_ACCESS_TOKEN_SECRET": "${TWITTER_ACCESS_TOKEN_SECRET}"
+      }
+    },
+    "instagram": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@instagram/mcp-server"
+      ],
+      "env": {
+        "INSTAGRAM_ACCESS_TOKEN": "${INSTAGRAM_ACCESS_TOKEN}",
+        "INSTAGRAM_CLIENT_ID": "${INSTAGRAM_CLIENT_ID}",
+        "INSTAGRAM_CLIENT_SECRET": "${INSTAGRAM_CLIENT_SECRET}"
+      }
+    }
+  }
+}

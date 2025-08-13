@@ -1,0 +1,13 @@
+{
+  "article_structure": {
+    "headline": "Article headline",
+    "content": "Full article content in HTML format",
+    "image_path": "Path to the article image",
+    "image_alt": "Alternative text for the image",
+    "image_credit": "Source credit for the image",
+    "category": "Article category (e.g., News, Food & Drink, etc.)",
+    "publish_date": "Publication date",
+    "author": "Article author"
+  }
+}
+

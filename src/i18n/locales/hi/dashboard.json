@@ -1,0 +1,11 @@
+{
+  "title": "डैशबोर्ड",
+  "welcome": "वापस स्वागत है, {{name}}",
+  "overview": {
+    "title": "अवलोकन",
+    "totalUsers": "कुल उपयोगकर्ता",
+    "activeUsers": "सक्रिय उपयोगकर्ता",
+    "newContent": "नई सामग्री",
+    "pendingApproval": "अनुमोदन लंबित"
+  }
+}

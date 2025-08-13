@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-08-02T09:00:16.505Z",
+  "url": "http://localhost:8001",
+  "results": {
+    "passed": [],
+    "failed": [
+      "Test suite error: Navigation timeout of 30000 ms exceeded"
+    ],
+    "warnings": []
+  },
+  "summary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "warnings": 0
+  }
+}

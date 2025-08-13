@@ -1,0 +1,45 @@
+{
+  "title": "أخبار دبي",
+  "subtitle": "آخر الأخبار والتحديثات من مصادر موثوقة في دبي والإمارات",
+  "searchPlaceholder": "البحث في المقالات الإخبارية...",
+  "newArticle": "مقال جديد من {{source}}",
+  "loadError": "فشل تحميل المقالات الإخبارية",
+  "noArticles": "لم يتم العثور على مقالات إخبارية",
+  "trending": "الأكثر رواجاً",
+  "by": "بقلم",
+  "tags": "الوسوم",
+  "relatedArticles": "مقالات ذات صلة",
+  "noRelatedArticles": "لم يتم العثور على مقالات ذات صلة",
+  "readOriginal": "اقرأ الأصل",
+  "bookmark": "حفظ",
+  "bookmarked": "محفوظ",
+  "bookmarkAdded": "تم حفظ المقال",
+  "bookmarkRemoved": "تمت إزالة الحفظ",
+  "aiSummary": "ملخص الذكاء الاصطناعي",
+  "aiSummaryTitle": "ملخص مُنشأ بالذكاء الاصطناعي",
+  "credibility": "المصداقية",
+  "filters": {
+    "sources": "مصادر الأخبار",
+    "allSources": "جميع المصادر",
+    "searchSources": "البحث في المصادر...",
+    "noSourcesFound": "لم يتم العثور على مصادر",
+    "sourcesSelected": "تم اختيار {{count}} مصدر",
+    "dateRange": "نطاق التاريخ",
+    "sentiment": "المشاعر",
+    "videoOnly": "فيديو فقط"
+  },
+  "category": {
+    "local": "أخبار محلية",
+    "business": "أعمال",
+    "technology": "تكنولوجيا",
+    "sports": "رياضة",
+    "entertainment": "ترفيه",
+    "lifestyle": "أسلوب حياة",
+    "opinion": "رأي"
+  },
+  "sentiment": {
+    "positive": "إيجابي",
+    "neutral": "محايد",
+    "negative": "سلبي"
+  }
+}

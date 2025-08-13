@@ -1,0 +1,17 @@
+{
+  "title": "Frequently Asked Questions",
+  "subtitle": "Find answers to common questions about MyDub.AI, our features, and how to get the most out of the platform.",
+  "searchPlaceholder": "Search FAQs...",
+  "stillHaveQuestions": "Still have questions?",
+  "ayyanCanHelp": "AI Assistant can provide instant answers",
+  "askAyyanX": "Ask AI Assistant",
+  "needMoreHelp": "Need more help?",
+  "contactSupport": "Contact our support team directly",
+  "contactSupportButton": "Contact Support",
+  "noResultsFound": "No results found",
+  "noResultsMessage": "We couldn't find any FAQs matching \"{{query}}\"",
+  "clearSearch": "Clear Search",
+  "didntFindAnswer": "Didn't find what you were looking for?",
+  "supportTeamHelp": "Our support team is here to help with any questions not covered in these FAQs.",
+  "emailUs": "Email Us"
+}

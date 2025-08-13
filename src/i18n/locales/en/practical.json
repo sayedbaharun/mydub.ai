@@ -1,0 +1,128 @@
+{
+  "title": "Practical Information",
+  "subtitle": "Essential information for daily life in Dubai",
+  "tabs": {
+    "weather": "Weather",
+    "traffic": "Traffic",
+    "transit": "Transit",
+    "emergency": "Emergency"
+  },
+  "weather": {
+    "title": "Dubai Weather",
+    "current": "Current",
+    "forecast": "Forecast",
+    "feelsLike": "Feels like {{temp}}°C",
+    "humidity": "Humidity",
+    "wind": "Wind",
+    "visibility": "Visibility",
+    "pressure": "Pressure",
+    "uvIndex": "UV Index",
+    "uvLow": "Low",
+    "uvModerate": "Moderate",
+    "uvHigh": "High",
+    "uvVeryHigh": "Very High",
+    "uvExtreme": "Extreme",
+    "sunrise": "Sunrise",
+    "sunset": "Sunset",
+    "rain": "rain",
+    "unavailable": "Weather data unavailable",
+    "tips": {
+      "title": "Weather Tips",
+      "sunProtection": "Always use sunscreen SPF 30+ when outdoors",
+      "hydration": "Drink plenty of water to stay hydrated",
+      "airConditioning": "Indoor venues are heavily air-conditioned",
+      "dustStorms": "Be prepared for occasional dust storms"
+    },
+    "seasonal": {
+      "title": "Seasonal Guide",
+      "summer": "Summer (May - September)",
+      "summerDesc": "Very hot and humid, temperatures can reach 45°C",
+      "winter": "Winter (November - March)",
+      "winterDesc": "Pleasant weather, ideal for outdoor activities"
+    }
+  },
+  "traffic": {
+    "liveMap": "Live Traffic Map",
+    "updates": "Traffic Updates",
+    "legend": "Legend",
+    "noUpdates": "No traffic updates available",
+    "updated": "Updated",
+    "navigate": "Navigate",
+    "status": {
+      "smooth": "Smooth",
+      "moderate": "Moderate",
+      "heavy": "Heavy",
+      "blocked": "Blocked"
+    },
+    "tips": {
+      "title": "Traffic Tips",
+      "peakHours": "Avoid peak hours: 7-9 AM and 5-8 PM",
+      "salik": "Salik toll gates charge AED 4 per crossing",
+      "parking": "Use RTA parking apps for easy payment",
+      "alternativeRoutes": "Check alternative routes before traveling",
+      "publicTransport": "Consider metro during rush hours",
+      "carpooling": "Carpooling lanes available on major highways"
+    }
+  },
+  "transit": {
+    "title": "Public Transit",
+    "metro": "Metro",
+    "bus": "Bus",
+    "tram": "Tram",
+    "ferry": "Ferry",
+    "routes": "Routes",
+    "routeDetails": "Route Details",
+    "stops": "stops",
+    "connections": "connections",
+    "operatingHours": "Operating Hours",
+    "weekdays": "Weekdays",
+    "weekends": "Weekends",
+    "frequency": "Frequency",
+    "majorStops": "Major Stops",
+    "moreStops": "and {{count}} more stops",
+    "operatingNow": "Operating Now",
+    "notOperating": "Not Operating",
+    "status": {
+      "operational": "Operational",
+      "delayed": "Delayed",
+      "suspended": "Suspended"
+    },
+    "nolCard": {
+      "title": "Nol Card",
+      "description": "Unified payment card for all public transport",
+      "benefit1": "Works on metro, bus, tram, and water bus",
+      "benefit2": "Available in Silver, Gold, Blue, and Red categories",
+      "benefit3": "Can be topped up at stations and online"
+    },
+    "fares": {
+      "title": "Fare Guide",
+      "metro": "Metro",
+      "bus": "Bus",
+      "tram": "Tram"
+    }
+  },
+  "emergency": {
+    "mainNumbers": "Emergency Numbers",
+    "otherContacts": "Other Important Contacts",
+    "call": "Call",
+    "callNow": "Call Now",
+    "available24h": "24/7",
+    "numberCopied": "{{name}} number copied",
+    "copyError": "Failed to copy number",
+    "category": {
+      "police": "Police",
+      "medical": "Medical",
+      "fire": "Fire",
+      "utility": "Utilities",
+      "embassy": "Embassies",
+      "helpline": "Helplines"
+    },
+    "tips": {
+      "title": "Emergency Tips",
+      "stayCalm": "Stay calm and speak clearly",
+      "clearInfo": "Provide clear information about the emergency",
+      "location": "Know your location or nearest landmark",
+      "followInstructions": "Follow all instructions from emergency services"
+    }
+  }
+}

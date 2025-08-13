@@ -1,0 +1,500 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mac-style scrollbar hiding */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+  
+  /* Shimmer animation for skeletons */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+    background-size: 200% 100%;
+    background-image: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.02) 20%,
+      rgba(0, 0, 0, 0.05) 50%,
+      rgba(0, 0, 0, 0.02) 80%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+}
+
+/* ... */
+
+@layer base {
+  :root {
+
+    --background: 0 0% 100%;
+
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 240 5.9% 10%;
+
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+
+    --input: 240 5.9% 90%;
+
+    --ring: 240 10% 3.9%;
+
+    --chart-1: 12 76% 61%;
+
+    --chart-2: 173 58% 39%;
+
+    --chart-3: 197 37% 24%;
+
+    --chart-4: 43 74% 66%;
+
+    --chart-5: 27 87% 67%;
+
+    --radius: 0.5rem
+  ;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%}
+  .dark {
+
+    --background: 240 10% 3.9%;
+
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+
+    --input: 240 3.7% 15.9%;
+
+    --ring: 240 4.9% 83.9%;
+
+    --chart-1: 220 70% 50%;
+
+    --chart-2: 160 60% 45%;
+
+    --chart-3: 30 80% 55%;
+
+    --chart-4: 280 65% 60%;
+
+    --chart-5: 340 75% 55%
+  ;
+
+    --sidebar-background: 240 5.9% 10%;
+
+    --sidebar-foreground: 240 4.8% 95.9%;
+
+    --sidebar-primary: 224.3 76.3% 48%;
+
+    --sidebar-primary-foreground: 0 0% 100%;
+
+    --sidebar-accent: 240 3.7% 15.9%;
+
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+
+    --sidebar-border: 240 3.7% 15.9%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%}
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom Scrollbar Styles for Luxury Feel */
+@layer components {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(107, 114, 128, 0.6) transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(107, 114, 128, 0.6), rgba(75, 85, 99, 0.8));
+    border-radius: 3px;
+    transition: background 0.3s ease;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(107, 114, 128, 0.8), rgba(75, 85, 99, 1));
+  }
+  
+  .scrollbar-thumb-gray-600 {
+    scrollbar-color: rgba(75, 85, 99, 0.8) transparent;
+  }
+  
+  .scrollbar-track-transparent {
+    scrollbar-color: rgba(75, 85, 99, 0.8) transparent;
+  }
+
+  /* Smooth transitions for all interactive elements */
+  .transition-luxury {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Accessibility Preferences */
+@layer utilities {
+  /* Reduce Motion */
+  .reduce-motion * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* High Contrast Mode */
+  .high-contrast {
+    --tw-contrast: contrast(1.25);
+    filter: var(--tw-contrast);
+  }
+  
+  .high-contrast img,
+  .high-contrast video {
+    opacity: 0.9;
+  }
+  
+  .high-contrast * {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Large Fonts Mode */
+  .large-fonts {
+    font-size: 1.125rem !important;
+  }
+  
+  .large-fonts h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  .large-fonts h2 {
+    font-size: 2rem !important;
+  }
+  
+  .large-fonts h3 {
+    font-size: 1.75rem !important;
+  }
+  
+  .large-fonts h4 {
+    font-size: 1.5rem !important;
+  }
+  
+  .large-fonts h5 {
+    font-size: 1.25rem !important;
+  }
+  
+  .large-fonts h6 {
+    font-size: 1.125rem !important;
+  }
+  
+  .large-fonts button,
+  .large-fonts input,
+  .large-fonts select,
+  .large-fonts textarea {
+    font-size: 1rem !important;
+  }
+  
+  .large-fonts .text-xs {
+    font-size: 0.875rem !important;
+  }
+  
+  .large-fonts .text-sm {
+    font-size: 1rem !important;
+  }
+  
+  .large-fonts .text-base {
+    font-size: 1.125rem !important;
+  }
+  
+  .large-fonts .text-lg {
+    font-size: 1.25rem !important;
+  }
+  
+  .large-fonts .text-xl {
+    font-size: 1.5rem !important;
+  }
+}
+
+
+/* Mobile-specific optimizations */
+@layer utilities {
+  .mobile-scroll-smooth {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  .mobile-tap-highlight {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  /* Prevent horizontal overflow on mobile */
+  .mobile-container {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  /* Mobile touch feedback */
+  .mobile-touch-feedback {
+    transition: transform 0.1s ease-out, background-color 0.1s ease-out;
+  }
+  
+  .mobile-touch-feedback:active {
+    transform: scale(0.98);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Enhanced Focus Indicators */
+.keyboard-nav *:focus {
+  outline: 3px solid var(--ring, #3b82f6) !important;
+  outline-offset: 2px !important;
+}
+
+/* Custom focus styles for different elements */
+.keyboard-nav button:focus,
+.keyboard-nav [role="button"]:focus {
+  outline-offset: 4px !important;
+}
+
+.keyboard-nav input:focus,
+.keyboard-nav textarea:focus,
+.keyboard-nav select:focus {
+  outline-offset: 0 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.keyboard-nav a:focus {
+  outline-offset: 2px !important;
+  text-decoration: underline;
+}
+
+/* Focus within containers */
+.keyboard-nav .focus-within\:ring-2:focus-within {
+  ring-width: 3px;
+}
+
+/* Consistent focus colors */
+:root {
+  --focus-ring-color: #3b82f6;
+  --focus-ring-color-dark: #60a5fa;
+}
+
+.dark {
+  --focus-ring-color: var(--focus-ring-color-dark);
+}
+
+/* Remove focus indicators for mouse users */
+:not(.keyboard-nav) *:focus {
+  outline: none;
+}
+
+/* Ensure focus is visible in high contrast mode */
+.high-contrast *:focus {
+  outline: 3px solid currentColor !important;
+  outline-offset: 2px !important;
+}
+
+/* High Contrast Mode Styles */
+.high-contrast {
+  /* Increase contrast for text */
+  --tw-text-opacity: 1;
+  
+  /* Background colors */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  
+  /* Stronger borders */
+  --border: 0 0% 0%;
+  
+  /* High contrast colors */
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 0 0% 90%;
+  --secondary-foreground: 0 0% 0%;
+  
+  --muted: 0 0% 85%;
+  --muted-foreground: 0 0% 0%;
+  
+  --accent: 0 0% 80%;
+  --accent-foreground: 0 0% 0%;
+  
+  --destructive: 0 84% 40%;
+  --destructive-foreground: 0 0% 100%;
+}
+
+.high-contrast.dark {
+  /* Dark mode high contrast */
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  
+  --border: 0 0% 100%;
+  
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
+  
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 100%;
+  
+  --accent: 0 0% 20%;
+  --accent-foreground: 0 0% 100%;
+}
+
+/* High contrast specific overrides */
+.high-contrast * {
+  /* Remove all shadows */
+  box-shadow: none !important;
+  text-shadow: none !important;
+  
+  /* Stronger focus indicators */
+  &:focus {
+    outline: 3px solid currentColor !important;
+    outline-offset: 2px !important;
+  }
+}
+
+.high-contrast img,
+.high-contrast video {
+  /* Increase image contrast */
+  filter: contrast(1.2);
+}
+
+.high-contrast a {
+  /* Underline all links */
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+}
+
+.high-contrast button,
+.high-contrast [role="button"] {
+  /* Stronger button borders */
+  border: 2px solid currentColor !important;
+}
+
+.high-contrast input,
+.high-contrast textarea,
+.high-contrast select {
+  /* Stronger form field borders */
+  border: 2px solid currentColor !important;
+}
+
+/* Ensure sufficient contrast for placeholders */
+.high-contrast ::placeholder {
+  opacity: 0.8;
+}
+
+/* High contrast loading states */
+.high-contrast .animate-pulse {
+  animation: none;
+  background-color: var(--muted);
+  border: 2px dashed currentColor;
+}
+
+/* High contrast for disabled elements */
+.high-contrast [disabled],
+.high-contrast [aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}

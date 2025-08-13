@@ -1,0 +1,39 @@
+{
+  "title": "सरकारी अपडेट",
+  "subtitle": "दुबई सरकारी विभागों से आधिकारिक घोषणाएं और सेवाएं",
+  "searchPlaceholder": "सरकारी अपडेट खोजें...",
+  "newUpdate": "{{department}} से नया अपडेट",
+  "loadError": "सरकारी अपडेट लोड करने में विफल",
+  "noUpdates": "कोई सरकारी अपडेट नहीं मिला",
+  "official": "आधिकारिक",
+  "attachments": "संलग्नक",
+  "attachmentDownloaded": "{{name}} डाउनलोड किया गया",
+  "downloadError": "संलग्नक डाउनलोड करने में विफल",
+  "expiresOn": "{{date}} को समाप्त होता है",
+  "filters": {
+    "departments": "विभाग",
+    "allDepartments": "सभी विभाग",
+    "searchDepartments": "विभाग खोजें...",
+    "noDepartmentsFound": "कोई विभाग नहीं मिला",
+    "departmentsSelected": "{{count}} विभाग चुने गए",
+    "dateRange": "तारीख सीमा",
+    "allDates": "सभी तारीखें",
+    "selectDateRange": "तारीख सीमा चुनें",
+    "lastWeek": "पिछला सप्ताह",
+    "lastMonth": "पिछला महीना",
+    "lastYear": "पिछला साल",
+    "priority": "प्राथमिकता"
+  },
+  "category": {
+    "announcement": "घोषणा",
+    "policy": "नीति अपडेट",
+    "service": "सेवा अपडेट",
+    "alert": "चेतावनी"
+  },
+  "priority": {
+    "urgent": "अत्यावश्यक",
+    "high": "उच्च",
+    "medium": "मध्यम",
+    "low": "कम"
+  }
+}

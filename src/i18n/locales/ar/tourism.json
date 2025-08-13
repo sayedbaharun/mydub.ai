@@ -1,0 +1,46 @@
+{
+  "title": "السياحة في دبي",
+  "subtitle": "اكتشف المعالم السياحية والفعاليات والتجارب في جميع أنحاء دبي",
+  "searchPlaceholder": "البحث عن المعالم السياحية أو المناطق أو الأنشطة...",
+  "loadError": "فشل تحميل المعالم السياحية",
+  "noAttractions": "لم يتم العثور على معالم سياحية",
+  "attractions": "المعالم السياحية",
+  "events": "الفعاليات",
+  "selectDate": "اختر تاريخ",
+  "noEventsOnDate": "لا توجد فعاليات في هذا التاريخ",
+  "free": "مجاني",
+  "openNow": "مفتوح الآن",
+  "closedNow": "مغلق",
+  "navigate": "التنقل",
+  "book": "احجز الآن",
+  "getDirections": "احصل على الاتجاهات",
+  "bookmarkAdded": "تم حفظ المعلم السياحي",
+  "bookmarkRemoved": "تمت إزالة الإشارة المرجعية",
+  "mapLegend": "مفتاح الخريطة",
+  "filters": {
+    "categories": "الفئات",
+    "areas": "المناطق",
+    "priceRange": "نطاق السعر",
+    "minRating": "الحد الأدنى للتقييم",
+    "features": "المميزات"
+  },
+  "category": {
+    "landmark": "معلم",
+    "beach": "شاطئ",
+    "shopping": "تسوق",
+    "entertainment": "ترفيه",
+    "culture": "ثقافة",
+    "dining": "مطاعم",
+    "adventure": "مغامرة",
+    "family": "عائلي"
+  },
+  "eventCategory": {
+    "festival": "مهرجان",
+    "concert": "حفلة موسيقية",
+    "sports": "رياضة",
+    "exhibition": "معرض",
+    "conference": "مؤتمر",
+    "family": "عائلي",
+    "cultural": "ثقافي"
+  }
+}
