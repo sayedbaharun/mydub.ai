@@ -49,6 +49,12 @@ class AuthErrorBoundaryComponent extends Component<AuthErrorBoundaryProps, State
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Auth error boundary caught:', error, errorInfo)
+    console.error('DETAILED ERROR INFO:', {
+      errorMessage: error.message,
+      errorStack: error.stack,
+      errorType: this.state.errorType,
+      componentStack: errorInfo.componentStack
+    })
     
     // Clear potentially corrupted auth state
     localStorage.removeItem('mydub_session_exists')
@@ -95,7 +101,7 @@ class AuthErrorBoundaryComponent extends Component<AuthErrorBoundaryProps, State
       case 'auth':
         return {
           title: 'Authentication Error',
-          description: 'There was a problem with your session. Please sign in again.',
+          description: `There was a problem with your session. Please refresh to continue. Debug: ${this.state.error?.message || 'Unknown error'}`,
           showSignOut: true
         }
       case 'network':
@@ -184,6 +190,9 @@ export class SimpleAuthErrorBoundary extends Component<Props, State> {
 
   public static getDerivedStateFromError(error: Error): State {
     let errorType: State['errorType'] = 'unknown'
+    
+    console.error('SimpleAuthErrorBoundary caught error:', error.message)
+    console.error('Full error:', error)
     
     if (error.message.includes('auth') || error.message.includes('session')) {
       errorType = 'auth'

@@ -104,15 +104,26 @@ export interface PersonalizedContent {
 }
 
 class AIInsightsEngine {
-  private openai: OpenAI;
+  private openai: OpenAI | null = null;
   private cache = getCacheClient();
   private recommendationEngine = getRecommendationEngine();
 
   constructor() {
-    this.openai = new OpenAI({
-      apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-      dangerouslyAllowBrowser: true
-    });
+    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+    if (apiKey && apiKey !== 'placeholder') {
+      try {
+        this.openai = new OpenAI({
+          apiKey,
+          dangerouslyAllowBrowser: true
+        });
+        console.log('OpenAI initialized with custom model:', import.meta.env.VITE_OPENAI_MODEL || 'gpt-3.5-turbo');
+      } catch (error) {
+        console.warn('OpenAI initialization failed:', error);
+        this.openai = null;
+      }
+    } else {
+      console.log('OpenAI API key not configured - AI features will use fallback data');
+    }
   }
 
   /**

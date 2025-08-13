@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -24,6 +24,7 @@ const signInSchema = z.object({
 
 export function SignInForm() {
   const { t } = useTranslation('auth')
+  const { t: tCommon } = useTranslation('common')
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -60,17 +61,17 @@ export function SignInForm() {
         // Handle specific error messages
         let errorMessage = error
         if (error.includes('Invalid login credentials')) {
-          errorMessage = t('auth.errors.invalidCredentials')
+          errorMessage = t('errors.invalidCredentials')
           // Clear password and focus
           form.setValue('password', '')
           setTimeout(() => passwordInputRef.current?.focus(), 100)
         } else if (error.includes('Account locked') || failedAttempts >= 4) {
-          errorMessage = t('auth.errors.accountLocked')
+          errorMessage = t('errors.accountLocked')
           setError(errorMessage)
         }
         
         toast.error(errorMessage, {
-          title: t('auth.signInFailed'),
+          title: t('signInFailed'),
         })
         
         // Set error state for display
@@ -78,8 +79,8 @@ export function SignInForm() {
         return
       }
 
-      toast.success(t('auth.signInSuccess'), {
-        title: t('auth.welcomeBack'),
+      toast.success(t('signInSuccess'), {
+        title: t('welcomeBack'),
       })
 
       // Wait for auth state to update before redirecting
@@ -88,10 +89,10 @@ export function SignInForm() {
       // Redirect to the page they were trying to access or home
       navigate(from === '/auth/signin' ? '/' : from, { replace: true })
     } catch (error) {
-      const errorMessage = t('errors.generic')
+      const errorMessage = tCommon('errors.generic')
       setError(errorMessage)
       toast.error(errorMessage, {
-        title: t('errors.somethingWrong'),
+        title: tCommon('errors.somethingWrong'),
       })
     } finally {
       setIsLoading(false)
@@ -104,19 +105,11 @@ export function SignInForm() {
       const { error } = await AuthService.signInWithSocial(provider)
 
       if (error) {
-        toast({
-          title: t('auth.socialSignInFailed'),
-          description: error,
-          variant: 'destructive',
-        })
+        toast.error(error, { title: t('socialSignInFailed') })
       }
       // Social sign in will redirect, so no need to handle success here
     } catch (error) {
-      toast({
-        title: t('errors.somethingWrong'),
-        description: t('errors.tryAgainLater'),
-        variant: 'destructive',
-      })
+      toast.error(tCommon('errors.tryAgainLater'), { title: tCommon('errors.somethingWrong') })
     } finally {
       setIsLoading(false)
     }
@@ -126,11 +119,7 @@ export function SignInForm() {
     const email = form.getValues('email')
     
     if (!email) {
-      toast({
-        title: t('auth.emailRequired'),
-        description: t('auth.enterEmailFirst'),
-        variant: 'destructive',
-      })
+      toast.error(t('enterEmailFirst'), { title: t('emailRequired') })
       return
     }
 
@@ -139,24 +128,13 @@ export function SignInForm() {
       const { error } = await AuthService.resetPassword(email)
 
       if (error) {
-        toast({
-          title: t('auth.resetFailed'),
-          description: error,
-          variant: 'destructive',
-        })
+        toast.error(error, { title: t('resetFailed') })
         return
       }
 
-      toast({
-        title: t('auth.checkEmail'),
-        description: t('auth.resetLinkSent'),
-      })
+      toast.success(t('resetLinkSent'), { title: t('checkEmail') })
     } catch (error) {
-      toast({
-        title: t('errors.somethingWrong'),
-        description: t('errors.tryAgainLater'),
-        variant: 'destructive',
-      })
+      toast.error(tCommon('errors.tryAgainLater'), { title: tCommon('errors.somethingWrong') })
     } finally {
       setIsLoading(false)
     }
@@ -165,9 +143,9 @@ export function SignInForm() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold">{t('auth.welcomeBack')}</CardTitle>
+        <CardTitle className="text-2xl font-bold">{t('welcomeBack')}</CardTitle>
         <CardDescription>
-          {t('auth.signInDescription')}
+          {t('signInDescription')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -198,7 +176,7 @@ export function SignInForm() {
                   fill="#EA4335"
                 />
               </svg>
-              {t('auth.google')}
+              {t('google')}
             </Button>
             <Button
               type="button"
@@ -209,7 +187,7 @@ export function SignInForm() {
               <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701" />
               </svg>
-              {t('auth.apple')}
+              {t('apple')}
             </Button>
           </div>
 
@@ -218,7 +196,7 @@ export function SignInForm() {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">{t('auth.orContinueWith')}</span>
+              <span className="bg-background px-2 text-muted-foreground">{t('orContinueWith')}</span>
             </div>
           </div>
 
@@ -239,7 +217,7 @@ export function SignInForm() {
           )}
 
           <FormField
-            label={t('auth.email')}
+            label={t('email')}
             error={form.formState.errors.email?.message}
             required
           >
@@ -248,7 +226,7 @@ export function SignInForm() {
               <Input
                 id="email"
                 type="email"
-                placeholder={t('auth.emailPlaceholder')}
+                placeholder={t('emailPlaceholder')}
                 className="pl-10 pr-10"
                 {...form.register('email')}
                 disabled={isLoading}
@@ -260,7 +238,7 @@ export function SignInForm() {
           <FormField
             label={
               <div className="flex items-center justify-between w-full">
-                <span>{t('auth.password')}</span>
+                <span>{t('password')}</span>
                 <Button
                   type="button"
                   variant="link"
@@ -268,7 +246,7 @@ export function SignInForm() {
                   onClick={handleForgotPassword}
                   disabled={isLoading}
                 >
-                  {t('auth.forgotPassword')}
+                  {t('forgotPassword')}
                 </Button>
               </div>
             }
@@ -280,7 +258,7 @@ export function SignInForm() {
               <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
-                placeholder={t('auth.passwordPlaceholder')}
+                placeholder={t('passwordPlaceholder')}
                 className="pl-10 pr-10"
                 {...form.register('password')}
                 ref={(e) => {
@@ -311,7 +289,7 @@ export function SignInForm() {
               disabled={isLoading}
             />
             <Label htmlFor="rememberMe" className="text-sm cursor-pointer">
-              {t('auth.rememberMe')}
+              {t('rememberMe')}
             </Label>
           </div>
 
@@ -321,7 +299,7 @@ export function SignInForm() {
               {error}
               {error.includes('Account locked') && (
                 <Link to="/support" className="ml-2 underline">
-                  {t('auth.contactSupport')}
+                  {t('contactSupport')}
                 </Link>
               )}
             </div>
@@ -331,19 +309,19 @@ export function SignInForm() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t('auth.signingIn')}
+                {t('signingIn')}
               </>
             ) : (
-              t('auth.signIn')
+              t('signIn')
             )}
           </Button>
         </form>
       </CardContent>
       <CardFooter>
         <p className="text-sm text-center w-full text-muted-foreground">
-          {t('auth.dontHaveAccount')}{' '}
+          {t('dontHaveAccount')}{' '}
           <Link to="/auth/signup" className="text-primary hover:underline">
-            {t('auth.signUp')}
+            {t('signUp')}
           </Link>
         </p>
       </CardFooter>

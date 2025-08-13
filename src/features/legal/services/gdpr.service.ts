@@ -12,6 +12,109 @@ import {
 } from '../types'
 
 export class GDPRService {
+  // Privacy Settings
+  static async getPrivacySettings(userId: string): Promise<PrivacySettings | null> {
+    try {
+      const { data, error } = await supabase
+        .from('privacy_settings')
+        .select('*')
+        .eq('user_id', userId)
+        .single()
+
+      if (error) {
+        // Table doesn't exist or no rows returned
+        if (error.code === '42P01' || error.code === 'PGRST116') {
+          return null
+        }
+        console.error('Error fetching privacy settings:', error)
+        return null
+      }
+
+      return data
+    } catch (error) {
+      console.error('Error in getPrivacySettings:', error)
+      return null
+    }
+  }
+
+  static async updatePrivacySettings(
+    userId: string,
+    settings: Partial<PrivacySettings>
+  ): Promise<void> {
+    try {
+      const { error } = await supabase
+        .from('privacy_settings')
+        .upsert({
+          user_id: userId,
+          ...settings,
+          updated_at: new Date().toISOString(),
+        })
+
+      if (error && error.code !== '42P01') {
+        console.error('Error updating privacy settings:', error)
+      }
+      // Silently ignore if table doesn't exist (42P01)
+    } catch (error) {
+      console.error('Error in updatePrivacySettings:', error)
+    }
+  }
+
+  // Consent Management
+  static async recordConsent(
+    userId: string,
+    consentType: string,
+    consentGiven: boolean,
+    consentVersion: string,
+    ipAddress: string,
+    userAgent: string
+  ): Promise<void> {
+    try {
+      const { error } = await supabase
+        .from('user_consents')
+        .insert({
+          user_id: userId,
+          consent_type: consentType,
+          consent_given: consentGiven,
+          consent_version: consentVersion,
+          ip_address: ipAddress,
+          user_agent: userAgent,
+          consent_date: new Date().toISOString(),
+        })
+
+      if (error && error.code !== '42P01') {
+        console.error('Error recording consent:', error)
+      }
+      // Silently ignore if table doesn't exist (42P01)
+    } catch (error) {
+      console.error('Error in recordConsent:', error)
+    }
+  }
+
+  // Compliance Logging
+  private static async logComplianceEvent(
+    eventType: string,
+    userId?: string,
+    metadata?: Record<string, any>
+  ): Promise<void> {
+    try {
+      const { error } = await supabase
+        .from('compliance_audit_logs')
+        .insert({
+          event_type: eventType,
+          user_id: userId,
+          metadata,
+          timestamp: new Date().toISOString(),
+        })
+
+      if (error && error.code !== '42P01') {
+        console.error('Error logging compliance event:', error)
+      }
+      // Silently ignore if table doesn't exist (42P01)
+    } catch (error) {
+      console.error('Error in logComplianceEvent:', error)
+    }
+  }
+
   // Data Subject Rights
   static async submitDataSubjectRequest(
     userId: string,

@@ -3,7 +3,8 @@
  * Provides caching layer for API responses and frequently accessed data
  */
 
-import { createClient, RedisClientType } from 'redis';
+// Type definitions for Redis (when package is not installed)
+type RedisClientType = any;
 
 export interface CacheOptions {
   ttl?: number; // Time to live in seconds
@@ -21,43 +22,8 @@ class RedisCache {
   }
 
   private async initializeClient() {
-    // Only initialize in production or when Redis URL is provided
-    const redisUrl = import.meta.env.VITE_REDIS_URL;
-    
-    if (!redisUrl) {
-            return;
-    }
-
-    try {
-      this.client = createClient({
-        url: redisUrl,
-        socket: {
-          connectTimeout: 5000,
-          reconnectStrategy: (retries) => {
-            if (retries > 3) {
-              
-              return false;
-            }
-            return Math.min(retries * 100, 3000);
-          }
-        }
-      });
-
-      this.client.on('error', (err) => {
-        
-        this.isConnected = false;
-      });
-
-      this.client.on('connect', () => {
-                this.isConnected = true;
-      });
-
-      this.connectionPromise = this.client.connect();
-      await this.connectionPromise;
-    } catch (error) {
-      console.error('Failed to initialize Redis client:', error);
-      this.client = null;
-    }
+    // Skip Redis initialization - we'll use in-memory cache for now
+    return;
   }
 
   private async ensureConnection() {

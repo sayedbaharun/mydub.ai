@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Supabase Auth</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Supabase Auth Test</h1>
+    <div id="status">Testing...</div>
+    <br>
+    <button onclick="testSignUp()">Test Sign Up</button>
+    <button onclick="testSignIn()">Test Sign In</button>
+    <div id="result"></div>
+
+    <script>
+        const { createClient } = supabase
+        const supabaseUrl = 'https://pltutlpmamxozailzffm.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsdHV0bHBtYW14b3phaWx6ZmZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwMDk4NTYsImV4cCI6MjA2NTU4NTg1Nn0.HWRsXqQ7CVkzVDhLIcEUmdPMW9XgLcK26BI7GqnZZ9E'
+        
+        const client = createClient(supabaseUrl, supabaseKey)
+        
+        // Check connection
+        async function checkConnection() {
+            try {
+                const { data, error } = await client.from('profiles').select('count').limit(1)
+                if (error) {
+                    document.getElementById('status').innerHTML = '❌ Connection failed: ' + error.message
+                } else {
+                    document.getElementById('status').innerHTML = '✅ Connected to Supabase'
+                }
+            } catch (e) {
+                document.getElementById('status').innerHTML = '❌ Error: ' + e.message
+            }
+        }
+        
+        async function testSignUp() {
+            const email = 'test' + Date.now() + '@example.com'
+            const { data, error } = await client.auth.signUp({
+                email: email,
+                password: 'TestPassword123!'
+            })
+            
+            if (error) {
+                document.getElementById('result').innerHTML = '❌ Sign up failed: ' + error.message
+            } else {
+                document.getElementById('result').innerHTML = '✅ Sign up successful for: ' + email
+            }
+        }
+        
+        async function testSignIn() {
+            const { data, error } = await client.auth.signInWithPassword({
+                email: 'test@example.com',
+                password: 'password123'
+            })
+            
+            if (error) {
+                document.getElementById('result').innerHTML = '❌ Sign in failed: ' + error.message
+            } else {
+                document.getElementById('result').innerHTML = '✅ Sign in successful!'
+            }
+        }
+        
+        checkConnection()
+    </script>
+</body>
+</html>

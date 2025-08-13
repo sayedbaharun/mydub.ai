@@ -11,17 +11,15 @@ console.log('Environment check:', {
   PROD: import.meta.env.PROD,
 })
 
-// Use placeholder values in development/demo mode when env vars are missing
-const url = supabaseUrl || 'https://placeholder.supabase.co'
-const key =
-  supabaseAnonKey ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2MjYyODUwMjQsImV4cCI6MTk0MTg2MTAyNH0.placeholder'
+// Use the actual Supabase credentials
+const url = supabaseUrl || 'https://pltutlpmamxozailzffm.supabase.co'
+const key = supabaseAnonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsdHV0bHBtYW14b3phaWx6ZmZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwMDk4NTYsImV4cCI6MjA2NTU4NTg1Nn0.4RIRul4zGoHhw54MKLNQXjbgonNHxJUfJYrkjiDAAJ8'
 
 if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn(
-    'The app is running in demo mode. Please add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment variables for full functionality.'
+  console.warn(
+    'Using default Supabase configuration. Make sure environment variables are properly set.'
   )
-  }
+}
 
 export const supabase = createClient(url, key, {
   auth: {

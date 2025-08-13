@@ -3,7 +3,6 @@ import { RouterProvider } from 'react-router-dom'
 import { router } from './app/routes/router'
 import { AuthProvider } from './features/auth/context/AuthContext'
 import { I18nProvider } from './app/providers/I18nProvider'
-import { MonitoringProvider } from './app/providers/MonitoringProvider'
 import { UserPreferencesProvider } from './app/providers/UserPreferencesProvider'
 import { OnboardingProvider } from './app/providers/OnboardingProvider'
 import { PWAProvider } from '@/shared/components/pwa'
@@ -42,23 +41,21 @@ function App() {
       <I18nProvider>
         <ScreenReaderProvider>
           <AuthProvider>
-            <MonitoringProvider>
-              <UserPreferencesProvider>
-                <OnboardingProvider>
-                  <PWAProvider>
-                    <SkipLinks />
-                    <FocusIndicator />
-                    <AriaLabelProvider />
-                    <RouteAnnouncer />
-                    <OfflineIndicator />
-                    <RouterProvider router={router} />
-                    <PWAInstallPrompt />
-                    <CookieConsent />
-                    <Toaster />
-                  </PWAProvider>
-                </OnboardingProvider>
-              </UserPreferencesProvider>
-            </MonitoringProvider>
+            <UserPreferencesProvider>
+              <OnboardingProvider>
+                <PWAProvider>
+                  <SkipLinks />
+                  <FocusIndicator />
+                  <AriaLabelProvider />
+                  <RouteAnnouncer />
+                  <OfflineIndicator />
+                  <RouterProvider router={router} />
+                  <PWAInstallPrompt />
+                  <CookieConsent />
+                  <Toaster />
+                </PWAProvider>
+              </OnboardingProvider>
+            </UserPreferencesProvider>
           </AuthProvider>
         </ScreenReaderProvider>
       </I18nProvider>

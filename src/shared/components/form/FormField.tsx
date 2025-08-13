@@ -4,7 +4,7 @@ import { cn } from '@/shared/lib/utils'
 import { AlertCircle, CheckCircle } from 'lucide-react'
 
 interface FormFieldProps {
-  label?: string
+  label?: ReactNode
   error?: string
   success?: string
   hint?: string
