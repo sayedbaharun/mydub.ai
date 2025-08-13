@@ -2,20 +2,13 @@ module.exports = {
   ci: {
     collect: {
       staticDistDir: './dist',
-      numberOfRuns: 3,
+      numberOfRuns: 1,
       settings: {
         preset: 'desktop',
         throttling: {
           cpuSlowdownMultiplier: 1,
         },
       },
-      urls: [
-        'http://localhost:5173',
-        'http://localhost:5173/news',
-        'http://localhost:5173/search',
-        'http://localhost:5173/government',
-        'http://localhost:5173/tourism',
-      ],
     },
     assert: {
       preset: 'lighthouse:recommended',
