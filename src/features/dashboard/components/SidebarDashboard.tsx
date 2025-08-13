@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/features/auth/context/AuthContext'
 import {
   LayoutDashboard,
@@ -67,6 +67,7 @@ export function SidebarDashboard() {
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
   const [activeSection, setActiveSection] = useState('ai-dashboard')
+  const [searchParams, setSearchParams] = useSearchParams()
 
   // Check permissions based on user role
   const isAdmin = user?.role === 'admin' || user?.email === 'admin@mydub.ai'
@@ -128,6 +129,53 @@ export function SidebarDashboard() {
     { show: canViewAICosts, value: 'ai-usage', label: 'AI Usage', icon: DollarSign },
     { show: canViewServiceMonitoring, value: 'service-monitoring', label: 'Service Monitor', icon: Server },
   ].filter(item => item.show)
+
+  // Allowed sections, filtered by permissions
+  const allowedSections = useMemo(() => {
+    const entries = [
+      'ai-dashboard',
+      ...(canViewStats ? ['overview', 'analytics'] : []),
+      ...(canManageArticles ? ['articles'] : []),
+      ...(canManageContent ? ['content'] : []),
+      ...(canManageUsers ? ['users'] : []),
+      ...(canViewLogs ? ['activity'] : []),
+      ...(canManageLegal ? ['legal'] : []),
+      ...(canManageAIContent ? ['ai-content'] : []),
+      ...(canViewAICosts ? ['ai-usage'] : []),
+      ...(canViewAITransparency ? ['ai-transparency'] : []),
+      ...(canViewServiceMonitoring ? ['service-monitoring'] : []),
+    ]
+    return new Set(entries)
+  }, [
+    canViewStats,
+    canManageArticles,
+    canManageContent,
+    canManageUsers,
+    canViewLogs,
+    canManageLegal,
+    canManageAIContent,
+    canViewAICosts,
+    canViewAITransparency,
+    canViewServiceMonitoring,
+  ])
+
+  // Initialize from ?tab=
+  useEffect(() => {
+    const tab = searchParams.get('tab')?.toLowerCase()
+    if (tab && allowedSections.has(tab)) {
+      setActiveSection(tab)
+    }
+  }, [searchParams, allowedSections])
+
+  // Optional: keep URL in sync when user clicks sidebar
+  useEffect(() => {
+    const current = searchParams.get('tab')
+    if (activeSection && current !== activeSection) {
+      const next = new URLSearchParams(searchParams)
+      next.set('tab', activeSection)
+      setSearchParams(next, { replace: true })
+    }
+  }, [activeSection])
 
   const renderContent = () => {
     switch (activeSection) {
@@ -193,7 +241,7 @@ export function SidebarDashboard() {
       case 'service-monitoring':
         return <GovernmentServiceMonitor />
       default:
-        return <PersonalizedDashboard />
+        return <SimplifiedPersonalizedDashboard />
     }
   }
 
