@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/features/auth/context/AuthContext'
 import {
   LayoutDashboard,
@@ -21,11 +21,15 @@ import {
   Menu,
   X,
   ChevronLeft,
+  Brain,
+  Sidebar,
 } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
 import { Button } from '@/shared/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/shared/components/ui/sheet'
 import { DashboardOverview } from '../components/DashboardOverview'
+import { SimplifiedPersonalizedDashboard } from '../components/SimplifiedPersonalizedDashboard'
+import { SidebarDashboard } from '../components/SidebarDashboard'
 import { ContentManagement } from '../components/ContentManagement'
 import { UserManagement } from '../components/UserManagement'
 import { ActivityLogs } from '../components/ActivityLogs'
@@ -39,8 +43,36 @@ import { ArticleManagementDashboard } from '../components/ArticleManagementDashb
 export function DashboardPage() {
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
-  const [activeTab, setActiveTab] = useState('overview')
+  const [searchParams, setSearchParams] = useSearchParams()
+  
+  // Check if user prefers sidebar layout
+  const layoutFromUrl = searchParams.get('layout')
+  const storedLayout = typeof window !== 'undefined' ? localStorage.getItem('dashboard-layout') : null
+  const [useSidebarLayout, setUseSidebarLayout] = useState(
+    layoutFromUrl
+      ? (layoutFromUrl === 'sidebar' || layoutFromUrl === 'side')
+      : storedLayout
+        ? storedLayout === 'sidebar'
+        : true // Default to sidebar layout
+  )
+  
+  const [activeTab, setActiveTab] = useState('ai-dashboard')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const toggleLayout = () => {
+    const newLayout = !useSidebarLayout
+    setUseSidebarLayout(newLayout)
+    localStorage.setItem('dashboard-layout', newLayout ? 'sidebar' : 'tabs')
+    
+    // Update URL to reflect layout choice
+    const newSearchParams = new URLSearchParams(searchParams)
+    if (newLayout) {
+      newSearchParams.set('layout', 'sidebar')
+    } else {
+      newSearchParams.delete('layout')
+    }
+    setSearchParams(newSearchParams)
+  }
 
   // Check permissions based on user role
   const isAdmin = user?.role === 'admin' || user?.email === 'admin@mydub.ai'
@@ -87,7 +119,8 @@ export function DashboardPage() {
   ].filter(action => action.show)
 
   const tabItems = [
-    { show: canViewStats, value: 'overview', label: 'Overview', icon: LayoutDashboard },
+    { show: true, value: 'ai-dashboard', label: 'AI Dashboard', icon: Brain },
+    { show: canViewStats, value: 'overview', label: 'Classic View', icon: LayoutDashboard },
     { show: canManageArticles, value: 'articles', label: 'Articles', icon: Newspaper },
     { show: canManageContent, value: 'content', label: 'Content', icon: FileText },
     { show: canManageUsers, value: 'users', label: 'Users', icon: Users },
@@ -99,6 +132,28 @@ export function DashboardPage() {
     { show: canViewAITransparency, value: 'ai-transparency', label: 'AI Transparency', icon: Eye },
     { show: canViewServiceMonitoring, value: 'service-monitoring', label: 'Service Monitor', icon: Server },
   ].filter(item => item.show)
+
+  // If user prefers sidebar layout, render that instead
+  if (useSidebarLayout) {
+    return (
+      <div className="min-h-screen bg-background">
+        {/* Layout Toggle Button */}
+        <div className="fixed top-4 right-4 z-50">
+          <Button
+            onClick={toggleLayout}
+            variant="outline"
+            size="sm"
+            className="bg-background/80 backdrop-blur-sm"
+            title="Switch to tabbed layout"
+          >
+            <LayoutDashboard className="h-4 w-4 mr-2" />
+            Tabs
+          </Button>
+        </div>
+        <SidebarDashboard />
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -202,6 +257,18 @@ export function DashboardPage() {
                 </p>
               </div>
               <div className="flex items-center gap-2 xl:gap-3">
+                {/* Layout Toggle */}
+                <Button
+                  onClick={toggleLayout}
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center gap-2 text-sm"
+                  title="Switch to sidebar layout"
+                >
+                  <Sidebar className="h-4 w-4" />
+                  <span className="hidden xl:inline">Sidebar</span>
+                </Button>
+
                 {/* Quick Actions - Desktop */}
                 {quickActions.map((action) => (
                   <Button
@@ -266,6 +333,10 @@ export function DashboardPage() {
           </div>
 
           {/* Tab Content */}
+          <TabsContent value="ai-dashboard" className="space-y-6 lg:space-y-8">
+            <SimplifiedPersonalizedDashboard />
+          </TabsContent>
+
           {canViewStats && (
             <TabsContent value="overview" className="space-y-6 lg:space-y-8">
               <DashboardOverview />

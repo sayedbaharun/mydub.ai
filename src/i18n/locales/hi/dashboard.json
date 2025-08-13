@@ -7,5 +7,8 @@
     "activeUsers": "सक्रिय उपयोगकर्ता",
     "newContent": "नई सामग्री",
     "pendingApproval": "अनुमोदन लंबित"
-  }
+  },
+  "viewDetails": "विवरण देखें",
+  "hideDetails": "विवरण छुपाएँ",
+  "thisWeek": "इस सप्ताह"
 }

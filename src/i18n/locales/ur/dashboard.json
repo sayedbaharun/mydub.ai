@@ -7,5 +7,8 @@
     "activeUsers": "فعال صارفین",
     "newContent": "نیا مواد",
     "pendingApproval": "منظوری کا انتظار"
-  }
+  },
+  "viewDetails": "تفصیلات دیکھیں",
+  "hideDetails": "تفصیلات چھپائیں",
+  "thisWeek": "اس ہفتے"
 }

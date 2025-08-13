@@ -9,7 +9,8 @@ import {
   CheckCircle,
   UserCheck,
   Mail,
-  Calendar
+  Calendar,
+  Clock
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { Button } from '@/shared/components/ui/button'
@@ -262,13 +263,16 @@ export function UserManagement() {
   }
 
   const getStatusBadge = (status: User['status']) => {
-    const variants: Record<User['status'], { className: string; icon: any }> = {
+    const variants: Record<string, { className: string; icon: any }> = {
       active: { className: 'bg-green-100 text-green-800', icon: <CheckCircle className="h-3 w-3" /> },
       inactive: { className: 'bg-gray-100 text-gray-800', icon: <Users className="h-3 w-3" /> },
-      suspended: { className: 'bg-red-100 text-red-800', icon: <Ban className="h-3 w-3" /> }
+      suspended: { className: 'bg-red-100 text-red-800', icon: <Ban className="h-3 w-3" /> },
+      pending: { className: 'bg-yellow-100 text-yellow-800', icon: <Clock className="h-3 w-3" /> },
+      verified: { className: 'bg-blue-100 text-blue-800', icon: <CheckCircle className="h-3 w-3" /> }
     }
 
-    const { className, icon } = variants[status]
+    const variant = variants[status] || variants.inactive
+    const { className, icon } = variant
 
     return (
       <Badge className={cn("border-0 flex items-center gap-1", className)}>

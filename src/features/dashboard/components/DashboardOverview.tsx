@@ -35,7 +35,7 @@ import {
 import { cn } from '@/shared/lib/utils'
 
 export function DashboardOverview() {
-  const { t } = useTranslation()
+  const { t } = useTranslation('dashboard')
   const { toast } = useToast()
   const [stats, setStats] = useState<DashboardStats | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -164,7 +164,7 @@ export function DashboardOverview() {
       {/* Header with Controls */}
       <div className="flex items-center justify-between">
         <div className="space-y-2">
-          <h2 className="text-3xl font-light text-gray-900">{t('overview')}</h2>
+          <h2 className="text-3xl font-light text-gray-900">{t('overview.title')}</h2>
           <p className="text-gray-500 font-light">
             Last updated: {lastUpdated.toLocaleTimeString()}
           </p>
