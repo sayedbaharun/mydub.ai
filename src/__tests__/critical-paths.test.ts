@@ -1,7 +1,4 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { BrowserRouter } from 'react-router-dom'
 import { AuthService } from '@/features/auth/services/auth.service'
 import { NewsService } from '@/features/news/services/news.service'
 import { supabase } from '@/shared/lib/supabase'
@@ -128,7 +125,8 @@ describe('Critical Path: Article Management', () => {
       limit: vi.fn().mockResolvedValue({ data: mockArticles, error: null })
     }
 
-    vi.mocked(supabase.from).mockReturnValue(mockQuery as any)
+    // @ts-expect-error - Mock type
+    vi.mocked(supabase.from).mockReturnValue(mockQuery)
 
     const articles = await NewsService.getArticles({})
     
@@ -203,7 +201,8 @@ describe('Critical Path: Article Management', () => {
       })
     }
 
-    vi.mocked(supabase.from).mockReturnValue(mockQuery as any)
+    // @ts-expect-error - Mock type
+    vi.mocked(supabase.from).mockReturnValue(mockQuery)
 
     const articles = await NewsService.getArticles({})
     

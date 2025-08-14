@@ -350,10 +350,11 @@ export const contentApprovalService = {
           case 'reject':
             await this.rejectContent(item_id, reason || 'Rejected by reviewer', notes)
             break
-          case 'schedule':
+          case 'schedule': {
             const schedDate = scheduled_date ? new Date(scheduled_date) : new Date()
             await this.scheduleContent(item_id, schedDate, notes)
             break
+          }
           case 'publish':
             await this.publishContent(item_id)
             break

@@ -37,16 +37,14 @@ export function MonitoringProvider({ children }: MonitoringProviderProps) {
         const environment = import.meta.env.VITE_NODE_ENV || 'development';
         monitoring.initSentry(sentryDsn, environment);
         setMonitoringInitialized(true);
-        } else {
-              }
+      }
 
       // Initialize Google Analytics
       const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
       if (gaMeasurementId) {
         analytics.init(gaMeasurementId);
         setAnalyticsInitialized(true);
-        } else {
-              }
+      }
 
       // Configure health monitoring alerts
       const webhookUrl = import.meta.env.VITE_WEBHOOK_URL;
