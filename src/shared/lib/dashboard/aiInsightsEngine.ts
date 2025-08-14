@@ -116,13 +116,13 @@ class AIInsightsEngine {
           apiKey,
           dangerouslyAllowBrowser: true
         });
-        console.log('OpenAI initialized with custom model:', import.meta.env.VITE_OPENAI_MODEL || 'gpt-3.5-turbo');
+        // OpenAI initialized successfully
       } catch (error) {
-        console.warn('OpenAI initialization failed:', error);
+        // OpenAI initialization failed, will use fallback
         this.openai = null;
       }
     } else {
-      console.log('OpenAI API key not configured - AI features will use fallback data');
+      // OpenAI not configured - using fallback data
     }
   }
 

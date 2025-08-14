@@ -228,9 +228,10 @@ export default function HomePage() {
     const loadFeaturedArticles = async () => {
       try {
         setLoadingArticles(true)
+        // Get all articles without category filter to show your test articles
         const articles = await NewsService.getArticles({
           sources: [],
-          categories: ['Today in Dubai', 'Eat & Drink'],
+          categories: [], // Empty array means all categories
           dateRange: { start: null, end: null },
           search: '',
         })

@@ -133,7 +133,7 @@ export function Header({ className }: HeaderProps) {
             <img 
               src="/mydub-logo-200.png" 
               alt="MyDub.AI" 
-              className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+              className="h-12 sm:h-14 md:h-16 w-auto object-contain"
               onLoad={() => console.log('Logo loaded successfully')}
               onError={(e) => {
                 console.error('Logo failed to load:', e);

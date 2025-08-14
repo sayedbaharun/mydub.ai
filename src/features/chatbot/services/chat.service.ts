@@ -1,5 +1,5 @@
 import { supabase } from '@/shared/lib/supabase'
-import { getPreferredAIService, callOpenRouter, getModelForTask } from '@/shared/lib/ai-services'
+import { getPreferredAIService, callOpenRouter, callOpenAI, getModelForTask } from '@/shared/lib/ai-services'
 import { ChatMessage, ChatSession, AIPersona, QuickAction } from '../types'
 import { getPersonaById } from '../data/personas'
 import { AIMayorService } from '@/features/ai-agents/services/ai-mayor.service'
@@ -49,16 +49,21 @@ const aiProvider = async (
   const context = analyzeMessageForContext(lastMessage.content)
 
   try {
-    // Use OpenRouter directly for faster responses
-    if (aiService === 'openrouter') {
-      const chatMessages = [
-        { role: 'system', content: systemPrompt },
-        ...messages.map(msg => ({
-          role: msg.role === 'user' ? 'user' : 'assistant',
-          content: msg.content
-        }))
-      ]
-      
+    const chatMessages = [
+      { role: 'system', content: systemPrompt },
+      ...messages.map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'assistant',
+        content: msg.content
+      }))
+    ]
+    
+    // Use OpenAI directly if configured (for Ayyan)
+    if (aiService === 'openai') {
+      const response = await callOpenAI(chatMessages)
+      return response
+    } 
+    // Use OpenRouter as fallback
+    else if (aiService === 'openrouter') {
       // Choose model based on query type
       const taskType = determineTaskType(lastMessage.content)
       const model = getModelForTask(taskType)

@@ -18,6 +18,8 @@ import { AriaLabelProvider } from '@/shared/components/accessibility/AriaLabelPr
 import { ErrorBoundary } from '@/shared/components/ErrorBoundary'
 import { initPerformanceMonitoring } from '@/shared/lib/performance'
 import { setupFocusVisible } from '@/shared/lib/accessibility-utils'
+import { preloadCriticalComponents, reportPerformanceMetrics, initWebVitals } from '@/shared/lib/performance-optimizer'
+import { initGoogleAnalytics } from '@/shared/lib/analytics'
 import './app/styles/index.css'
 
 function App() {
@@ -26,15 +28,21 @@ function App() {
     initPerformanceMonitoring()
     setupFocusVisible()
     
-    // Preload critical routes after initial load
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => {
-        // Preload common routes
-        import('./pages/HomePage')
-        import('./features/government/pages/GovernmentPage')
-        import('./features/news/pages/NewsPage')
+    // Initialize Google Analytics
+    initGoogleAnalytics()
+    
+    // Initialize Web Vitals monitoring
+    initWebVitals()
+    
+    // Report performance metrics after page load
+    if ('addEventListener' in window) {
+      window.addEventListener('load', () => {
+        setTimeout(reportPerformanceMetrics, 1000)
       })
     }
+    
+    // Preload critical components
+    preloadCriticalComponents()
   }, [])
 
   return (

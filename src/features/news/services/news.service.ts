@@ -70,12 +70,16 @@ export class NewsService {
         .order('published_at', { ascending: false })
         .limit(50)
 
+      // Handle both single category and multiple categories filters
       if (filters?.category && filters.category !== 'all') {
         query = query.eq('category', filters.category)
+      } else if (filters?.categories && filters.categories.length > 0) {
+        query = query.in('category', filters.categories)
       }
 
-      if (filters?.searchQuery) {
-        query = query.or(`title.ilike.%${filters.searchQuery}%,summary.ilike.%${filters.searchQuery}%`)
+      if (filters?.searchQuery || filters?.search) {
+        const searchTerm = filters.searchQuery || filters.search
+        query = query.or(`title.ilike.%${searchTerm}%,summary.ilike.%${searchTerm}%`)
       }
 
       const { data: dbArticles, error } = await query
@@ -113,10 +117,8 @@ export class NewsService {
           readTime: Math.ceil(article.content.replace(/<[^>]*>/g, '').split(' ').length / 200)
         }))
 
-        // If we have database articles, prioritize them
-        if (formattedArticles.length >= 10) {
-          return formattedArticles
-        }
+        // Always return database articles if we have any
+        return formattedArticles
       }
 
       // Try to get real news from NewsAPI as fallback

@@ -76,10 +76,69 @@ export const isAIConfigured = (): boolean => {
   return true
 }
 
-// Get the preferred AI service - now defaults to OpenRouter
+// Get the preferred AI service - now defaults to OpenAI for Ayyan
 export const getPreferredAIService = (): 'openrouter' | 'anthropic' | 'openai' | 'google' => {
-  // Always use OpenRouter since Edge Function handles it
+  // Check if OpenAI is configured
+  const openaiKey = import.meta.env.VITE_OPENAI_API_KEY
+  if (openaiKey && openaiKey !== 'demo-key') {
+    return 'openai'
+  }
+  // Fallback to OpenRouter if OpenAI not configured
   return 'openrouter'
+}
+
+// OpenAI API call helper for Ayyan
+export const callOpenAI = async (
+  messages: any[],
+  model?: string,
+  temperature?: number
+): Promise<string> => {
+  const openaiKey = import.meta.env.VITE_OPENAI_API_KEY
+  const openaiModel = import.meta.env.VITE_OPENAI_MODEL || 'gpt-4-turbo-preview'
+  
+  if (!openaiKey || openaiKey === 'demo-key') {
+    throw new Error('OpenAI API key not configured')
+  }
+  
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${openaiKey}`
+      },
+      body: JSON.stringify({
+        model: model || openaiModel,
+        messages,
+        temperature: temperature || 0.7,
+        max_tokens: 1000,
+        stream: false
+      })
+    })
+    
+    if (!response.ok) {
+      const error = await response.json()
+      if (response.status === 429) {
+        throw new Error('Rate limit exceeded. Please try again later.')
+      }
+      if (response.status === 401) {
+        throw new Error('Invalid API key. Please check your OpenAI configuration.')
+      }
+      throw new Error(error.error?.message || `API error: ${response.status}`)
+    }
+    
+    const data = await response.json()
+    
+    if (data.choices && data.choices[0] && data.choices[0].message) {
+      return data.choices[0].message.content
+    }
+    
+    throw new Error('Invalid response format from OpenAI')
+    
+  } catch (error) {
+    console.error('OpenAI API call failed:', error)
+    throw error
+  }
 }
 
 // OpenRouter API call helper

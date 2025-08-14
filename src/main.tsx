@@ -3,6 +3,15 @@ import { createRoot } from 'react-dom/client'
 import * as Sentry from '@sentry/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App'
+import { validateEnvironment } from './shared/lib/env-validation'
+
+// Validate environment variables on app startup
+try {
+  validateEnvironment()
+} catch (error) {
+  console.error('Environment validation failed:', error)
+  // In production, this will prevent the app from starting with missing config
+}
 
 // Initialize Sentry
 Sentry.init({

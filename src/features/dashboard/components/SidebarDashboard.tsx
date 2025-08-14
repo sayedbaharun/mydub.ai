@@ -105,17 +105,10 @@ export function SidebarDashboard() {
       icon: Bot,
       path: '/dashboard/ai-reporters',
     },
-    {
-      show: canManageAIContent,
-      label: 'AI Content',
-      icon: PenTool,
-      path: '/dashboard/content-management',
-    },
   ].filter(action => action.show)
 
   const mainMenuItems = [
     { show: true, value: 'ai-dashboard', label: 'AI Dashboard', icon: Brain },
-    { show: canViewStats, value: 'overview', label: 'Classic View', icon: LayoutDashboard },
     { show: canManageArticles, value: 'articles', label: 'Articles', icon: Newspaper },
     { show: canManageContent, value: 'content', label: 'Content', icon: FileText },
     { show: canViewStats, value: 'analytics', label: 'Analytics', icon: BarChart3 },
@@ -134,7 +127,7 @@ export function SidebarDashboard() {
   const allowedSections = useMemo(() => {
     const entries = [
       'ai-dashboard',
-      ...(canViewStats ? ['overview', 'analytics'] : []),
+      ...(canViewStats ? ['analytics'] : []),
       ...(canManageArticles ? ['articles'] : []),
       ...(canManageContent ? ['content'] : []),
       ...(canManageUsers ? ['users'] : []),
@@ -319,7 +312,7 @@ export function SidebarDashboard() {
 
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+            <SidebarGroupLabel className="font-bold text-sm">Dashboard</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {mainMenuItems.map((item) => (
@@ -340,7 +333,7 @@ export function SidebarDashboard() {
 
           {canViewAITransparency && (
             <SidebarGroup>
-              <SidebarGroupLabel>AI & Transparency</SidebarGroupLabel>
+              <SidebarGroupLabel className="font-bold text-sm">AI & Transparency</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
@@ -360,7 +353,7 @@ export function SidebarDashboard() {
 
           {adminMenuItems.length > 0 && (
             <SidebarGroup>
-              <SidebarGroupLabel>Administration</SidebarGroupLabel>
+              <SidebarGroupLabel className="font-bold text-sm">Administration</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   {adminMenuItems.map((item) => (

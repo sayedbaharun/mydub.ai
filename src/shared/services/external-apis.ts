@@ -512,7 +512,7 @@ export class ExternalAPIsService {
         const weatherApiKey = import.meta.env.VITE_WEATHERAPI_KEY;
         const openWeatherKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
         if (!weatherApiKey && !openWeatherKey) {
-          console.log('Development mode: No weather API key, using fallback data');
+          // Using fallback weather data in development mode
           const fallbackWeather = {
             coord: { lon: 55.2708, lat: 25.2048 },
             weather: [{ id: 800, main: 'Clear', description: 'clear sky', icon: '01d' }],

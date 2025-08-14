@@ -114,7 +114,7 @@ export class SecureApiKeyStorage {
     try {
       return this.vault.decrypt(encryptedData, masterPassword);
     } catch (error) {
-      console.error('Failed to decrypt API key:', error);
+      // Decryption failed
       return null;
     }
   }
