@@ -15,21 +15,15 @@ const ResetPasswordPage = lazy(() => import('@/pages/auth/ResetPasswordPage.tsx'
 const VerifyEmailSentPage = lazy(() => import('@/pages/auth/VerifyEmailSentPage.tsx'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage.tsx'))
 
-// Legal pages - temporarily commented out due to missing files
-// const PrivacyPolicyPage = lazy(() => import('@/pages/legal/PrivacyPolicyPage'))
-// const TermsOfServicePage = lazy(() => import('@/pages/legal/TermsOfServicePage'))
+// Legal pages
 const CookiePolicyPage = lazy(() => import('@/features/legal/pages/CookiePolicyPage'))
 const DynamicPrivacyPolicyPage = lazy(
   () => import('@/features/legal/pages/DynamicPrivacyPolicyPage')
 )
-// const EnhancedTermsOfServicePage = lazy(() => import('@/pages/legal/EnhancedTermsOfServicePage'))
-// const DataProcessingAgreementPage = lazy(() => import('@/pages/legal/DataProcessingAgreementPage'))
 const PrivacyCenterPage = lazy(() => import('@/features/legal/components/PrivacyCenter'))
 const ComplianceMonitoringDashboard = lazy(
   () => import('@/features/legal/components/ComplianceMonitoringDashboard')
 )
-// const ContentPolicyPage = lazy(() => import('@/pages/legal/ContentPolicyPage'))
-// const AIEthicsPage = lazy(() => import('@/pages/legal/AIEthicsPage'))
 
 // Admin pages
 const AdminComplianceDashboard = lazy(
@@ -54,10 +48,6 @@ const CategoryManagementPage = lazy(
   () => import('@/features/content-management/pages/CategoryManagementPage')
 )
 
-// Editorial Dashboard - Temporarily disabled (tables not in production)
-// const EditorialDashboard = lazy(() =>
-//   import('@/features/editorial').then((m) => ({ default: m.EditorialDashboard }))
-// )
 
 // Lazy load feature pages
 const GovernmentPage = lazy(() =>
@@ -92,26 +82,14 @@ const TrafficPage = lazy(() => import('@/pages/TrafficPage'))
 const EventsPage = lazy(() => import('@/pages/EventsPage'))
 const HelpPage = lazy(() => import('@/pages/HelpPage'))
 const SupportPage = lazy(() => import('@/pages/SupportPage'))
-// // Removed - page doesn't exist
-// const AyyanPage = lazy(() => import('@/pages/AyyanPage')) // File doesn't exist
 const AboutPage = lazy(() => import('@/pages/AboutPage'))
 const ContactPage = lazy(() => import('@/pages/ContactPage'))
 const FAQPage = lazy(() => import('@/pages/FAQPage'))
-// Removed - page doesn't exist
-// const ArabicLearningPage = lazy(() => import('@/pages/ArabicLearningPage'))
 
 // New category pages
 const EatAndDrinkPage = lazy(() => import('@/pages/EatAndDrinkPage'))
 const BeachesPage = lazy(() => import('@/pages/BeachesPage'))
 const NightlifePage = lazy(() => import('@/pages/NightlifePage'))
-// Removed - page doesn't exist
-// const LuxuryLifePage = lazy(() =>
-//   import('@/pages/LuxuryLifePage').then((m) => ({ default: m.LuxuryLifePage }))
-// )
-// Removed - page doesn't exist
-// const DubaiReelsPage = lazy(() =>
-//   import('@/pages/DubaiReelsPage').then((m) => ({ default: m.DubaiReelsPage }))
-// )
 const TodayPage = lazy(() => import('@/pages/TodayPage'))
 const LivingPage = lazy(() => 
   import('@/pages/LivingPage').then((m) => ({ default: m.LivingPage }))
@@ -171,8 +149,6 @@ export const router = createBrowserRouter([
         path: 'nightlife',
         element: withSuspense(NightlifePage),
       },
-      // Removed - page doesn't exist
-      // Removed - page doesn't exist
       {
         id: 'reels-redirect',
         path: 'reels',
