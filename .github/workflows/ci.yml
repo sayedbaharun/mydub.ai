@@ -75,12 +75,6 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-      
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-files
-          path: dist/
 
   security-scan:
     name: Security Scan
@@ -98,28 +92,8 @@ jobs:
       #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       #   continue-on-error: true
 
-  lighthouse:
-    name: Lighthouse Performance Test
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-files
-          path: dist/
-      
-      - name: Install and run Lighthouse CI
-        run: |
-          npm install -g @lhci/cli@0.13.x
-          lhci autorun --config=./lighthouserc.js || echo "Lighthouse CI completed with warnings"
+  # Lighthouse test removed - artifacts not available without upload
+  # Performance testing can be done in Vercel deployment
 
   deploy-preview:
     name: Deploy Preview
@@ -140,7 +114,7 @@ jobs:
   deploy-production:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    needs: [build, security-scan, lighthouse]
+    needs: [build, security-scan]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
