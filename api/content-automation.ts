@@ -6,7 +6,7 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+const handler = async (req: VercelRequest, res: VercelResponse) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true')
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -252,3 +252,5 @@ async function getTemplates(req: VercelRequest, res: VercelResponse) {
 
   return res.status(200).json(data || [])
 }
+
+export default handler;

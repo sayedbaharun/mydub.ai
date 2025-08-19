@@ -81,7 +81,7 @@ function estimateTokens(text: string): number {
   return Math.ceil(text.length / 4);
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+const handler = async (req: VercelRequest, res: VercelResponse) => {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', process.env.VERCEL_URL || '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -192,3 +192,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 }
+
+export default handler;
