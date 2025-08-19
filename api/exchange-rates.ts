@@ -21,6 +21,9 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
     // Prefer HTTPS provider for reliability. If FIXER_API_KEY exists, try Fixer first.
     const apiKey = process.env.FIXER_API_KEY || process.env.VITE_FIXER_API_KEY
 
+    // Set CDN cache for 30 minutes with SWR
+    res.setHeader('Cache-Control', 's-maxage=1800, stale-while-revalidate')
+
     // Helper to respond in a normalized AED-based shape
     const respond = (rates: { EUR: number; GBP: number; INR: number; USD: number }, timestamp?: number) =>
       res.status(200).json({ ...rates, timestamp: timestamp ?? Math.floor(Date.now()/1000), loading: false })

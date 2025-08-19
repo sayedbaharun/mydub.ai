@@ -18,6 +18,8 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
   }
 
   try {
+    // Set CDN cache for 10 minutes with SWR
+    res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
     // Get API key from environment - try weatherapi.com first, then OpenWeather
     const weatherApiKey = process.env.VITE_WEATHERAPI_KEY || process.env.WEATHERAPI_KEY
     const openWeatherKey = process.env.VITE_OPENWEATHER_API_KEY || process.env.OPENWEATHER_API_KEY
