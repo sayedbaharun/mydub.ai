@@ -98,19 +98,23 @@ export default function HomePage() {
   const [loadingArticles, setLoadingArticles] = useState(true)
   const [dailyArabicPhrase, setDailyArabicPhrase] = useState<ArabicPhrase | null>(null)
   const [weatherData, setWeatherData] = useState({
-    temp: 40,  // Realistic Dubai summer temperature
+    temp: 40,  // display temp (defaults)
+    tempC: 40, // raw Celsius for unit conversion
     condition: 'Sunny',
     humidity: 65,
-    wind: 12,
+    wind: 12, // km/h by default
     loading: true,
   })
   const [exchangeRates, setExchangeRates] = useState({
-    EUR: 3.98,  // Updated to current rate (1 EUR = 3.98 AED)
-    GBP: 4.67,  // Updated to current rate (1 GBP = 4.67 AED)
-    INR: 0.044, // Updated to current rate (1 INR = 0.044 AED)
-    USD: 3.673, // USD is pegged to AED
+    EUR: 3.98,  // 1 EUR = AED
+    GBP: 4.67,  // 1 GBP = AED
+    INR: 0.044, // 1 INR = AED
+    USD: 3.673, // 1 USD = AED (pegged)
     loading: true,
   })
+  const [tempUnit, setTempUnit] = useState<'C' | 'F'>('C')
+  const [weatherUpdatedAt, setWeatherUpdatedAt] = useState<number | null>(null)
+  const [ratesUpdatedAt, setRatesUpdatedAt] = useState<number | null>(null)
   
   // Newsletter form state
   const [newsletterName, setNewsletterName] = useState('')
@@ -143,42 +147,54 @@ export default function HomePage() {
         const response = await fetch('/api/weather?city=Dubai')
         if (response.ok) {
           const data = await response.json()
-          setWeatherData({
-            temp: Math.round(data.main.temp),
+          const tempC = Math.round(data.main.temp)
+          setWeatherData(prev => ({
+            ...prev,
+            temp: tempUnit === 'C' ? tempC : Math.round((tempC * 9) / 5 + 32),
+            tempC,
             condition: data.weather[0].main,
             humidity: data.main.humidity,
             wind: Math.round(data.wind.speed * 3.6), // Convert m/s to km/h
             loading: false,
-          })
+          }))
+          setWeatherUpdatedAt(data.dt ? data.dt * 1000 : Date.now())
         } else {
           // Fallback to realistic Dubai weather (August)
           const currentMonth = new Date().getMonth(); // 0-11
           const isWinter = currentMonth >= 10 || currentMonth <= 2; // Nov-Feb
           const isSummer = currentMonth >= 5 && currentMonth <= 8; // Jun-Sep
-          
-          setWeatherData({
-            temp: isSummer ? Math.floor(Math.random() * 5) + 38 : // 38-43°C in summer
-                  isWinter ? Math.floor(Math.random() * 5) + 22 : // 22-27°C in winter
-                  Math.floor(Math.random() * 5) + 28, // 28-33°C in spring/fall
+
+          const fallbackC = isSummer ? Math.floor(Math.random() * 5) + 38 : // 38-43°C in summer
+                            isWinter ? Math.floor(Math.random() * 5) + 22 : // 22-27°C in winter
+                            Math.floor(Math.random() * 5) + 28 // 28-33°C in spring/fall
+          setWeatherData(prev => ({
+            ...prev,
+            temp: tempUnit === 'C' ? fallbackC : Math.round((fallbackC * 9) / 5 + 32),
+            tempC: fallbackC,
             condition: isSummer ? 'Sunny' : 'Clear',
             humidity: isSummer ? 65 : 50,
             wind: 12,
             loading: false,
-          })
+          }))
+          setWeatherUpdatedAt(Date.now())
         }
       } catch (error) {
         console.error('Error loading weather:', error)
         // Use realistic fallback
         const currentMonth = new Date().getMonth();
         const isSummer = currentMonth >= 5 && currentMonth <= 8;
-        
-        setWeatherData({
-          temp: isSummer ? 40 : 28, // 40°C in summer, 28°C otherwise
+
+        const fallbackC2 = isSummer ? 40 : 28
+        setWeatherData(prev => ({
+          ...prev,
+          temp: tempUnit === 'C' ? fallbackC2 : Math.round((fallbackC2 * 9) / 5 + 32),
+          tempC: fallbackC2,
           condition: 'Clear',
           humidity: isSummer ? 65 : 50,
           wind: 12,
           loading: false,
-        })
+        }))
+        setWeatherUpdatedAt(Date.now())
       }
     }
 
@@ -187,6 +203,14 @@ export default function HomePage() {
     const weatherInterval = setInterval(loadWeatherData, 600000)
     return () => clearInterval(weatherInterval)
   }, [])
+
+  // Recompute displayed temperature when unit changes
+  useEffect(() => {
+    setWeatherData(prev => ({
+      ...prev,
+      temp: tempUnit === 'C' ? prev.tempC : Math.round((prev.tempC * 9) / 5 + 32),
+    }))
+  }, [tempUnit])
 
   // Load exchange rates from Fixer.io API
   useEffect(() => {
@@ -381,8 +405,15 @@ export default function HomePage() {
                       <div className="flex items-center gap-2">
                         <Thermometer className="h-3 w-3 text-desert-gold" />
                         <span className="font-medium text-white">
-                          {weatherData.loading ? '...' : `${weatherData.temp}°C`}
+                          {weatherData.loading ? '...' : `${weatherData.temp}°${tempUnit}`}
                         </span>
+                        <button
+                          onClick={() => setTempUnit(tempUnit === 'C' ? 'F' : 'C')}
+                          className="ml-2 rounded bg-white/20 px-2 py-0.5 text-xs text-white hover:bg-white/30"
+                          aria-label="Toggle temperature unit"
+                        >
+                          °{tempUnit === 'C' ? 'F' : 'C'}
+                        </button>
                       </div>
                     </div>
                     <div className="flex items-center justify-between">

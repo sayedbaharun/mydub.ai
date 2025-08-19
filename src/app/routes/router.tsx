@@ -78,6 +78,7 @@ const AIMayorDemoPage = lazy(() =>
   import('@/features/ai-agents/components/AIMayorDemo').then((m) => ({ default: m.AIMayorDemo }))
 )
 const WeatherPage = lazy(() => import('@/pages/WeatherPage'))
+const LuxuryLifePage = lazy(() => import('@/pages/LuxuryLifePage'))
 const TrafficPage = lazy(() => import('@/pages/TrafficPage'))
 const EventsPage = lazy(() => import('@/pages/EventsPage'))
 const HelpPage = lazy(() => import('@/pages/HelpPage'))
@@ -148,6 +149,11 @@ export const router = createBrowserRouter([
         id: 'nightlife',
         path: 'nightlife',
         element: withSuspense(NightlifePage),
+      },
+      {
+        id: 'luxurylife',
+        path: 'luxurylife',
+        element: withSuspense(LuxuryLifePage),
       },
       {
         id: 'reels-redirect',
