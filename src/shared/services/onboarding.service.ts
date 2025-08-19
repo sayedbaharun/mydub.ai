@@ -45,7 +45,7 @@ class OnboardingService {
           .from('user_onboarding')
           .select('*')
           .eq('user_id', userId)
-          .single()
+          .maybeSingle()
 
         if (error || !data) {
           // Check local storage as fallback

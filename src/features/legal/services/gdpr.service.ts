@@ -19,7 +19,7 @@ export class GDPRService {
         .from('privacy_settings')
         .select('*')
         .eq('user_id', userId)
-        .single()
+        .maybeSingle()
 
       if (error) {
         // Table doesn't exist or no rows returned
@@ -40,22 +40,38 @@ export class GDPRService {
   static async updatePrivacySettings(
     userId: string,
     settings: Partial<PrivacySettings>
-  ): Promise<void> {
+  ): Promise<PrivacySettings | null> {
     try {
+      // Ensure session user matches userId for RLS
+      const { data: user } = await supabase.auth.getUser()
+      if (!user?.user?.id || user.user.id !== userId) {
+        return null
+      }
+
       const { error } = await supabase
         .from('privacy_settings')
         .upsert({
           user_id: userId,
           ...settings,
           updated_at: new Date().toISOString(),
-        })
+        }, { onConflict: 'user_id' })
 
       if (error && error.code !== '42P01') {
         console.error('Error updating privacy settings:', error)
+        return null
       }
-      // Silently ignore if table doesn't exist (42P01)
+
+      // Return the latest settings from DB
+      const { data } = await supabase
+        .from('privacy_settings')
+        .select('*')
+        .eq('user_id', userId)
+        .maybeSingle()
+
+      return data as unknown as PrivacySettings | null
     } catch (error) {
       console.error('Error in updatePrivacySettings:', error)
+      return null
     }
   }
 
