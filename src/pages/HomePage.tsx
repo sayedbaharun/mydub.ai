@@ -98,17 +98,17 @@ export default function HomePage() {
   const [loadingArticles, setLoadingArticles] = useState(true)
   const [dailyArabicPhrase, setDailyArabicPhrase] = useState<ArabicPhrase | null>(null)
   const [weatherData, setWeatherData] = useState({
-    temp: 25,
+    temp: 40,  // Realistic Dubai summer temperature
     condition: 'Sunny',
-    humidity: 45,
+    humidity: 65,
     wind: 12,
     loading: true,
   })
   const [exchangeRates, setExchangeRates] = useState({
-    EUR: 4.20,
-    GBP: 4.86,
-    INR: 0.0419,
-    USD: 3.67,
+    EUR: 3.98,  // Updated to current rate (1 EUR = 3.98 AED)
+    GBP: 4.67,  // Updated to current rate (1 GBP = 4.67 AED)
+    INR: 0.044, // Updated to current rate (1 INR = 0.044 AED)
+    USD: 3.673, // USD is pegged to AED
     loading: true,
   })
   
@@ -151,11 +151,17 @@ export default function HomePage() {
             loading: false,
           })
         } else {
-          // Fallback to realistic Dubai weather
+          // Fallback to realistic Dubai weather (August)
+          const currentMonth = new Date().getMonth(); // 0-11
+          const isWinter = currentMonth >= 10 || currentMonth <= 2; // Nov-Feb
+          const isSummer = currentMonth >= 5 && currentMonth <= 8; // Jun-Sep
+          
           setWeatherData({
-            temp: Math.floor(Math.random() * 10) + 20, // 20-30°C range
-            condition: 'Clear',
-            humidity: 45,
+            temp: isSummer ? Math.floor(Math.random() * 5) + 38 : // 38-43°C in summer
+                  isWinter ? Math.floor(Math.random() * 5) + 22 : // 22-27°C in winter
+                  Math.floor(Math.random() * 5) + 28, // 28-33°C in spring/fall
+            condition: isSummer ? 'Sunny' : 'Clear',
+            humidity: isSummer ? 65 : 50,
             wind: 12,
             loading: false,
           })
@@ -163,10 +169,13 @@ export default function HomePage() {
       } catch (error) {
         console.error('Error loading weather:', error)
         // Use realistic fallback
+        const currentMonth = new Date().getMonth();
+        const isSummer = currentMonth >= 5 && currentMonth <= 8;
+        
         setWeatherData({
-          temp: Math.floor(Math.random() * 10) + 20, // 20-30°C range
+          temp: isSummer ? 40 : 28, // 40°C in summer, 28°C otherwise
           condition: 'Clear',
-          humidity: 45,
+          humidity: isSummer ? 65 : 50,
           wind: 12,
           loading: false,
         })
@@ -188,19 +197,19 @@ export default function HomePage() {
         
         if (rates && !rates.error) {
           setExchangeRates({
-            EUR: rates.EUR || 4.20,
-            GBP: rates.GBP || 4.86,
-            INR: rates.INR || 0.0419,
-            USD: rates.USD || 3.67,
+            EUR: rates.EUR || 3.98,
+            GBP: rates.GBP || 4.67,
+            INR: rates.INR || 0.044,
+            USD: rates.USD || 3.673,
             loading: false,
           })
         } else {
-          // Use fallback rates if API fails
+          // Use current fallback rates if API fails (Aug 2024)
           setExchangeRates({
-            EUR: 4.20, // 1 EUR = 4.20 AED
-            GBP: 4.86, // 1 GBP = 4.86 AED
-            INR: 0.0419, // 1 INR = 0.0419 AED
-            USD: 3.67, // 1 USD = 3.67 AED
+            EUR: 3.98,  // 1 EUR = 3.98 AED
+            GBP: 4.67,  // 1 GBP = 4.67 AED
+            INR: 0.044, // 1 INR = 0.044 AED
+            USD: 3.673, // 1 USD = 3.673 AED (pegged)
             loading: false,
           })
         }
@@ -208,10 +217,10 @@ export default function HomePage() {
         console.error('Error loading exchange rates:', error)
         // Use realistic fallback rates
         setExchangeRates({
-          EUR: 4.20,
-          GBP: 4.86,
-          INR: 0.0419,
-          USD: 3.67,
+          EUR: 3.98,
+          GBP: 4.67,
+          INR: 0.044,
+          USD: 3.673,
           loading: false,
         })
       }

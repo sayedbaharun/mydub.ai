@@ -20,6 +20,7 @@ import SignInPage from '../../pages/auth/SignInPage'
 import SignUpPage from '../../pages/auth/SignUpPage'
 import OnboardingPage from '../../pages/auth/OnboardingPage'
 import { DashboardPage } from '../../features/dashboard/pages/DashboardPage'
+import LuxuryLifePage from '../../pages/LuxuryLifePage'
 // import { EditorialDashboard } from '../../features/editorial' // Disabled - tables not in production
 
 export function AppRoutes() {
@@ -41,6 +42,7 @@ export function AppRoutes() {
           <Route id="news-detail" path="/news/:id" element={<NewsDetailPage />} />
           <Route id="tourism" path="/tourism" element={<TourismPage />} />
           <Route id="tourism-detail" path="/tourism/:id" element={<TourismDetailPage />} />
+          <Route id="luxurylife" path="/luxurylife" element={<LuxuryLifePage />} />
           <Route id="practical" path="/practical-info" element={<PracticalPage />} />
           <Route id="chatbot" path="/chatbot" element={<ChatbotPage />} />
           <Route id="chat" path="/chat" element={<ChatbotPage />} />

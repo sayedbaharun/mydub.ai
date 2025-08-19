@@ -512,17 +512,19 @@ export class ExternalAPIsService {
         const weatherApiKey = import.meta.env.VITE_WEATHERAPI_KEY;
         const openWeatherKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
         if (!weatherApiKey && !openWeatherKey) {
-          // Using fallback weather data in development mode
+          // Using realistic Dubai weather fallback
+          const currentMonth = new Date().getMonth();
+          const isSummer = currentMonth >= 5 && currentMonth <= 8;
           const fallbackWeather = {
             coord: { lon: 55.2708, lat: 25.2048 },
-            weather: [{ id: 800, main: 'Clear', description: 'clear sky', icon: '01d' }],
+            weather: [{ id: 800, main: isSummer ? 'Sunny' : 'Clear', description: 'clear sky', icon: '01d' }],
             main: {
-              temp: 28,
-              feels_like: 29,
-              temp_min: 26,
-              temp_max: 30,
+              temp: isSummer ? 40 : 28,
+              feels_like: isSummer ? 45 : 31,
+              temp_min: isSummer ? 36 : 24,
+              temp_max: isSummer ? 43 : 32,
               pressure: 1013,
-              humidity: 45
+              humidity: isSummer ? 65 : 50
             },
             wind: { speed: 3.5, deg: 270 },
             name: 'Dubai',
@@ -549,17 +551,19 @@ export class ExternalAPIsService {
       return weatherData;
     } catch (error) {
       console.error('Failed to fetch weather data:', error);
-      // Return fallback weather data
+      // Return realistic fallback weather data
+      const currentMonth = new Date().getMonth();
+      const isSummer = currentMonth >= 5 && currentMonth <= 8;
       const fallbackWeather = {
         coord: { lon: 55.2708, lat: 25.2048 },
-        weather: [{ id: 800, main: 'Clear', description: 'clear sky', icon: '01d' }],
+        weather: [{ id: 800, main: isSummer ? 'Sunny' : 'Clear', description: 'clear sky', icon: '01d' }],
         main: {
-          temp: 28,
-          feels_like: 29,
-          temp_min: 26,
-          temp_max: 30,
+          temp: isSummer ? 40 : 28,
+          feels_like: isSummer ? 45 : 31,
+          temp_min: isSummer ? 36 : 24,
+          temp_max: isSummer ? 43 : 32,
           pressure: 1013,
-          humidity: 45
+          humidity: isSummer ? 65 : 50
         },
         wind: { speed: 3.5, deg: 270 },
         name: 'Dubai',
