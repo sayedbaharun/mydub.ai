@@ -74,7 +74,7 @@
         },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "*"
+          "value": "https://www.mydub.ai"
         },
         {
           "key": "Access-Control-Allow-Methods",
