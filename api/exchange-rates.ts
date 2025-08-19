@@ -1,11 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 const handler = async (req: VercelRequest, res: VercelResponse) => {
-  // Enable CORS
+  // Enable CORS (align with production origin)
+  const origin = 'https://www.mydub.ai'
   res.setHeader('Access-Control-Allow-Credentials', 'true')
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Origin', origin)
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
 
   if (req.method === 'OPTIONS') {
     res.status(200).end()
@@ -17,54 +18,46 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
   }
 
   try {
+    // Prefer HTTPS provider for reliability. If FIXER_API_KEY exists, try Fixer first.
     const apiKey = process.env.FIXER_API_KEY || process.env.VITE_FIXER_API_KEY
-    
-    if (!apiKey) {
-      console.warn('Using fallback exchange rates - API key not configured')
-      throw new Error('API key not configured')
-    }
-    
-    // Create AbortController for timeout
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 10000)
-    
-    // Try fixer.io API first (free tier only supports http)
-    const response = await fetch(
-      `http://data.fixer.io/api/latest?access_key=${apiKey}&symbols=AED,USD,GBP,INR,EUR`,
-      {
-        signal: controller.signal,
-        headers: {
-          'User-Agent': 'MyDub.AI/1.0'
+
+    // Helper to respond in a normalized AED-based shape
+    const respond = (rates: { EUR: number; GBP: number; INR: number; USD: number }, timestamp?: number) =>
+      res.status(200).json({ ...rates, timestamp: timestamp ?? Math.floor(Date.now()/1000), loading: false })
+
+    // Attempt Fixer (HTTP-only on free) if key is provided
+    if (apiKey) {
+      try {
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 10000)
+        const response = await fetch(
+          `http://data.fixer.io/api/latest?access_key=${apiKey}&symbols=AED,USD,GBP,INR,EUR`,
+          { signal: controller.signal, headers: { 'User-Agent': 'MyDub.AI/1.0' } }
+        )
+        clearTimeout(timeoutId)
+        if (response.ok) {
+          const data = await response.json()
+          if (data.success && data.rates) {
+            const aedPerEur = data.rates.AED
+            return respond({
+              EUR: aedPerEur,
+              GBP: (data.rates.AED / data.rates.GBP),
+              INR: (data.rates.AED / data.rates.INR),
+              USD: (data.rates.AED / data.rates.USD)
+            }, data.timestamp)
+          }
         }
+      } catch (_) {
+        // fall through to HTTPS provider
       }
-    )
-    
-    clearTimeout(timeoutId)
-
-    if (!response.ok) {
-      throw new Error(`Exchange rate API error: ${response.status}`)
     }
 
-    const data = await response.json()
-    
-    if (data.success && data.rates) {
-      // Convert from EUR base to AED base
-      const aedPerEur = data.rates.AED
-      
-      // Calculate how many AED per foreign currency
-      const rates = {
-        EUR: aedPerEur,
-        GBP: (data.rates.AED / data.rates.GBP),
-        INR: (data.rates.AED / data.rates.INR),
-        USD: (data.rates.AED / data.rates.USD),
-        timestamp: data.timestamp,
-        loading: false
-      }
-      
-      return res.status(200).json(rates)
-    } else {
-      throw new Error(data.error?.info || 'Failed to fetch exchange rates')
-    }
+    // HTTPS provider (no key required): exchangerate.host, base=AED
+    const httpsResp = await fetch('https://api.exchangerate.host/latest?base=AED&symbols=USD,GBP,INR,EUR')
+    if (!httpsResp.ok) throw new Error(`Exchange rate API error: ${httpsResp.status}`)
+    const j = await httpsResp.json()
+    return respond({ EUR: j.rates.EUR, GBP: j.rates.GBP, INR: j.rates.INR, USD: j.rates.USD }, j.timestamp)
+
   } catch (error) {
     console.error('Failed to fetch exchange rates:', error)
     
