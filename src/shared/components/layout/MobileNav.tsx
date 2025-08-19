@@ -122,7 +122,6 @@ export function MobileDrawer({ open, onOpenChange }: MobileDrawerProps) {
 
   const adminItems = [
     { title: 'Dashboard', href: '/dashboard', icon: Home, roles: ['admin', 'editor', 'curator'] },
-    { title: 'Editorial', href: '/editorial', icon: Newspaper, roles: ['admin', 'editor', 'publisher'] },
     { title: 'Content', href: '/dashboard/content', icon: Home, roles: ['admin', 'editor'] },
     { title: 'Users', href: '/dashboard/users', icon: Home, roles: ['admin'] },
   ]

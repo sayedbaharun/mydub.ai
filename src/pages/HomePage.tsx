@@ -355,8 +355,6 @@ export default function HomePage() {
                   </Button>
                 </Link>
               </div>
-
-
             </div>
 
             {/* Smart Info Cards */}

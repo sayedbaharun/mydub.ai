@@ -113,8 +113,22 @@ export function Footer() {
             <div className="text-gray-400 text-sm">
               © {currentYear} MyDub.AI. All rights reserved.
             </div>
-            <div className="flex items-center gap-1 text-gray-400 text-sm">
-              Made with <Heart className="h-4 w-4 text-red-500" /> for Dubai
+            <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm">
+              <Link to="/privacy" className="hover:text-white transition-colors">
+                Privacy
+              </Link>
+              <span className="hidden md:inline">•</span>
+              <Link to="/terms" className="hover:text-white transition-colors">
+                Terms
+              </Link>
+              <span className="hidden md:inline">•</span>
+              <Link to="/cookies" className="hover:text-white transition-colors">
+                Cookies
+              </Link>
+              <span className="hidden md:inline">•</span>
+              <div className="flex items-center gap-1">
+                Made with <Heart className="h-4 w-4 text-red-500" /> for Dubai
+              </div>
             </div>
           </div>
         </div>

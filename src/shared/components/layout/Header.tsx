@@ -240,18 +240,6 @@ export function Header({ className }: HeaderProps) {
                       Dashboard
                     </DropdownMenuItem>
                   )}
-                  {canAccessEditorial && (
-                    <DropdownMenuItem 
-                      onClick={() => {
-                        announce('Navigating to editorial newsroom', 'polite')
-                        navigate('/editorial')
-                      }}
-                      role="menuitem"
-                    >
-                      <Newspaper className="mr-2 h-4 w-4" aria-hidden="true" />
-                      Editorial
-                    </DropdownMenuItem>
-                  )}
                   <DropdownMenuItem 
                     onClick={() => {
                       announce('Navigating to profile', 'polite')
