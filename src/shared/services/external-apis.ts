@@ -41,15 +41,40 @@ export class ExternalAPIsService {
   // Fetch UAE/Dubai news from our API endpoint
   static async fetchDubaiNews(): Promise<NewsAPIResponse | null> {
     try {
-      const response = await fetch('/api/news?pageSize=20');
+      const response = await fetch('/api/news?pageSize=20', {
+        headers: { Accept: 'application/json' }
+      });
 
       if (!response.ok) {
         throw new Error(`News API error: ${response.status}`);
       }
 
-      return await response.json();
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        // Non-JSON response (e.g., HTML/error). Quietly fallback.
+        if (import.meta.env.VITE_VERBOSE_DEBUG === 'true') {
+          const text = await response.text();
+          console.warn('News API returned non-JSON response. Falling back. Snippet:', text.slice(0, 120));
+        }
+        return null;
+      }
+
+      try {
+        const data = await response.json();
+        if (!data || !Array.isArray(data.articles)) {
+          return null;
+        }
+        return data;
+      } catch (parseErr) {
+        if (import.meta.env.VITE_VERBOSE_DEBUG === 'true') {
+          console.warn('Failed to parse news JSON, falling back:', parseErr);
+        }
+        return null;
+      }
     } catch (error) {
-      console.error('Failed to fetch Dubai news:', error);
+      if (import.meta.env.VITE_VERBOSE_DEBUG === 'true') {
+        console.error('Failed to fetch Dubai news:', error);
+      }
       return null;
     }
   }
@@ -57,15 +82,39 @@ export class ExternalAPIsService {
   // Fetch business news specifically
   static async fetchBusinessNews(): Promise<NewsAPIResponse | null> {
     try {
-      const response = await fetch('/api/news?category=business&pageSize=10');
+      const response = await fetch('/api/news?category=business&pageSize=10', {
+        headers: { Accept: 'application/json' }
+      });
 
       if (!response.ok) {
         throw new Error(`News API error: ${response.status}`);
       }
 
-      return await response.json();
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        if (import.meta.env.VITE_VERBOSE_DEBUG === 'true') {
+          const text = await response.text();
+          console.warn('Business News API returned non-JSON response. Falling back. Snippet:', text.slice(0, 120));
+        }
+        return null;
+      }
+
+      try {
+        const data = await response.json();
+        if (!data || !Array.isArray(data.articles)) {
+          return null;
+        }
+        return data;
+      } catch (parseErr) {
+        if (import.meta.env.VITE_VERBOSE_DEBUG === 'true') {
+          console.warn('Failed to parse business news JSON, falling back:', parseErr);
+        }
+        return null;
+      }
     } catch (error) {
-      console.error('Failed to fetch business news:', error);
+      if (import.meta.env.VITE_VERBOSE_DEBUG === 'true') {
+        console.error('Failed to fetch business news:', error);
+      }
       return null;
     }
   }
@@ -585,7 +634,9 @@ export class ExternalAPIsService {
       // In development, use fallback rates immediately
       // In production, the API proxy will work
       if (import.meta.env.DEV) {
-        console.log('Development mode: Using fallback exchange rates');
+        if (import.meta.env.VITE_VERBOSE_DEBUG === 'true') {
+          console.log('Development mode: Using fallback exchange rates');
+        }
         const fallbackRates = {
           EUR: 4.20,
           GBP: 4.86,

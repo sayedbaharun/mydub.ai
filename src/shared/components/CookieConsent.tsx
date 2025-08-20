@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Cookie, Check, Settings, Shield, BarChart3, Target } from 'lucide-react';
+import { Cookie, Check, Settings, BarChart3, Target } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Card } from '@/shared/components/ui/card';
 import { Switch } from '@/shared/components/ui/switch';
@@ -467,34 +467,6 @@ export function CookieSettingsButton() {
 }
 
 // Hook to check cookie consent status
-export function useCookieConsent() {
-  const [hasConsented, setHasConsented] = useState(false);
-  const [preferences, setPreferences] = useState<CookiePreferences>({
-    necessary: true,
-    analytics: false,
-    marketing: false,
-    monitoring: false,
-    preferences: false,
-    performance: false,
-    functional: false,
-  });
+// Hook moved to '@/shared/hooks/useCookieConsent'
 
-  useEffect(() => {
-    const consent = SecureStorage.getItem(COOKIE_CONSENT_KEY);
-    const prefs = SecureStorage.getItem(COOKIE_PREFERENCES_KEY);
-    
-    setHasConsented(!!consent);
-    if (prefs) {
-      setPreferences(prefs);
-    }
-  }, []);
-
-  return { hasConsented, preferences };
-}
-
-// Extend Window interface for gtag
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-  }
-}
+// Note: global Window.gtag is declared in '@/shared/lib/analytics.ts'

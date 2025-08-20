@@ -143,18 +143,17 @@ export default function HomePage() {
   useEffect(() => {
     const loadWeatherData = async () => {
       try {
-        // Try to get weather from our API proxy
-        const response = await fetch('/api/weather?city=Dubai')
-        if (response.ok) {
-          const data = await response.json()
-          const tempC = Math.round(data.main.temp)
+        // Use shared service which handles fallbacks and caching
+        const data = await ExternalAPIsService.fetchWeatherData()
+        if (data && !data.error) {
+          const tempC = Math.round(data.main?.temp ?? 0)
           setWeatherData(prev => ({
             ...prev,
             temp: tempUnit === 'C' ? tempC : Math.round((tempC * 9) / 5 + 32),
             tempC,
-            condition: data.weather[0].main,
-            humidity: data.main.humidity,
-            wind: Math.round(data.wind.speed * 3.6), // Convert m/s to km/h
+            condition: data.weather?.[0]?.main || 'Clear',
+            humidity: data.main?.humidity ?? 50,
+            wind: Math.round(((data.wind?.speed ?? 3.5) * 3.6)), // m/s -> km/h
             loading: false,
           }))
           setWeatherUpdatedAt(data.dt ? data.dt * 1000 : Date.now())

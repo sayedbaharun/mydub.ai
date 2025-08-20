@@ -94,12 +94,16 @@ export function AriaLabelProvider() {
         }
       })
 
-      // Add proper headings hierarchy
+      // Add proper headings hierarchy (debug-only)
       const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
       let lastLevel = 0
       headings.forEach((heading) => {
         const level = parseInt(heading.tagName[1])
-        if (lastLevel > 0 && level > lastLevel + 1) {
+        if (
+          import.meta.env.VITE_A11Y_DEBUG &&
+          lastLevel > 0 &&
+          level > lastLevel + 1
+        ) {
           console.warn(`Heading hierarchy issue: ${heading.tagName} follows h${lastLevel}`)
         }
         lastLevel = level

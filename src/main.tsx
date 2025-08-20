@@ -5,6 +5,28 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App'
 import { validateEnvironment } from './shared/lib/env-validation'
 
+// Initialize Google Analytics only when configured and in production
+function initGoogleAnalytics() {
+  const id = import.meta.env.VITE_GA_MEASUREMENT_ID
+  if (!id) return
+  if (!import.meta.env.PROD && import.meta.env.VITE_VERBOSE_DEBUG !== 'true') return
+
+  // Inject gtag script
+  const script = document.createElement('script')
+  script.async = true
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`
+  document.head.appendChild(script)
+
+  // Configure gtag
+  ;(window as any).dataLayer = (window as any).dataLayer || []
+  function gtag(...args: any[]) {
+    ;(window as any).dataLayer.push(args)
+  }
+  ;(window as any).gtag = gtag
+  gtag('js', new Date())
+  gtag('config', id)
+}
+
 // Validate environment variables on app startup
 try {
   validateEnvironment()
@@ -29,6 +51,9 @@ Sentry.init({
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
 })
+
+// Initialize GA after Sentry
+initGoogleAnalytics()
 
 // Create QueryClient for React Query
 const queryClient = new QueryClient({

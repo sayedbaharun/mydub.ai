@@ -109,7 +109,7 @@ export function TextToSpeechPlayer({
       }
     }
 
-    if (ttsService.isSupported()) {
+    if (ttsService.isSpeechSupported()) {
       loadVoices()
     }
 
@@ -126,7 +126,7 @@ export function TextToSpeechPlayer({
 
   // Auto-play effect
   useEffect(() => {
-    if (autoPlay && ttsService.isSupported() && text && !isPlaying) {
+    if (autoPlay && ttsService.isSpeechSupported() && text && !isPlaying) {
       handlePlay()
     }
   }, [autoPlay, text])
@@ -143,7 +143,7 @@ export function TextToSpeechPlayer({
   }, [])
 
   const handlePlay = async () => {
-    if (!ttsService.isSupported()) {
+    if (!ttsService.isSpeechSupported()) {
       toast({
         title: 'Not Supported',
         description: 'Text-to-speech is not supported in your browser.',
@@ -245,7 +245,7 @@ export function TextToSpeechPlayer({
     return langFlags[lang.split('-')[0]] || '🌐'
   }
 
-  if (!ttsService.isSupported()) {
+  if (!ttsService.isSpeechSupported()) {
     return (
       <Card className={cn('border-amber-200 bg-amber-50', className)}>
         <CardContent className="pt-6">

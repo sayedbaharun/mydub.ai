@@ -144,6 +144,7 @@ export const SecurityConfig = {
         "https://*.supabase.co", 
         "https://api.openai.com", 
         "https://www.google-analytics.com",
+        "https://region1.google-analytics.com",
         "https://*.sentry.io",
         "wss://*.supabase.co",
         "http://localhost:*",
@@ -169,6 +170,7 @@ export const SecurityConfig = {
         "https://*.supabase.co", 
         "https://api.openai.com", 
         "https://www.google-analytics.com",
+        "https://region1.google-analytics.com",
         "https://*.sentry.io",
         "wss://*.supabase.co"
       ],

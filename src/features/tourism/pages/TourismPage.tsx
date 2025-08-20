@@ -1,20 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { 
-  Filter, 
-  Map, 
-   
-  Grid3x3, 
   Search,
 } from 'lucide-react'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
-import { Slider } from '@/shared/components/ui/slider'
-import { Label } from '@/shared/components/ui/label'
-import { Checkbox } from '@/shared/components/ui/checkbox'
+// Removed unused UI imports
 import { LoadingSpinner } from '@/shared/components/LoadingSpinner'
 import { AttractionCard } from '../components/AttractionCard'
 import { TourismMap } from '../components/TourismMap'
@@ -36,7 +29,7 @@ export function TourismPage() {
   const [loading, setLoading] = useState(true)
   const [selectedAttraction, setSelectedAttraction] = useState<Attraction | null>(null)
   const [selectedDate, setSelectedDate] = useState(new Date())
-  const [showFilters, setShowFilters] = useState(false)
+  // Removed unused showFilters state
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
 
   // Filters
@@ -52,9 +45,7 @@ export function TourismPage() {
     search: searchParams.get('search') || ''
   })
 
-  // Get unique areas and features
-  const uniqueAreas = TourismService.getUniqueAreas()
-  const uniqueFeatures = TourismService.getUniqueFeatures()
+  // Removed unused unique areas/features
 
   // Load attractions
   const loadAttractions = async () => {
@@ -80,22 +71,30 @@ export function TourismPage() {
     }
   }
 
-  // Get user location
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          })
-        },
-        (error) => {
-          console.error('Error getting location:', error)
-        }
-      )
+  // Request user location on demand
+  const requestLocation = () => {
+    if (!('geolocation' in navigator)) {
+      toast.info(t('geolocationUnsupported', { defaultValue: 'Geolocation is not supported by your browser.' }))
+      return
     }
-  }, [])
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setUserLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        })
+        toast.success(t('geolocationEnabled', { defaultValue: 'Location enabled for nearby results.' }))
+      },
+      (error) => {
+        if (import.meta.env.VITE_VERBOSE_DEBUG === 'true') {
+          console.warn('Geolocation error:', error)
+        }
+        // Graceful message without noisy console errors
+        toast.info(t('geolocationDenied', { defaultValue: 'Location access denied or unavailable. You can still explore the map.' }))
+      },
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    )
+  }
 
   // Update URL params when filters change
   useEffect(() => {
@@ -216,31 +215,46 @@ export function TourismPage() {
               
               {/* View Toggle */}
               <div className={cn(
-                "flex gap-1 bg-gray-50 p-1 rounded-lg",
+                "flex items-center gap-2",
                 isRTL && "flex-row-reverse"
               )}>
-                <button
-                  onClick={() => setView('grid')}
-                  className={cn(
-                    'px-3 py-2 text-sm font-medium rounded-md transition-all duration-200',
-                    view === 'grid'
-                      ? 'bg-white text-midnight-black shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
-                  )}
-                >
-                  {t('grid')}
-                </button>
-                <button
-                  onClick={() => setView('map')}
-                  className={cn(
-                    'px-3 py-2 text-sm font-medium rounded-md transition-all duration-200',
-                    view === 'map'
-                      ? 'bg-white text-midnight-black shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
-                  )}
-                >
-                  {t('map')}
-                </button>
+                <div className={cn(
+                  'flex gap-1 bg-gray-50 p-1 rounded-lg',
+                  isRTL && 'flex-row-reverse'
+                )}>
+                  <button
+                    onClick={() => setView('grid')}
+                    className={cn(
+                      'px-3 py-2 text-sm font-medium rounded-md transition-all duration-200',
+                      view === 'grid'
+                        ? 'bg-white text-midnight-black shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900'
+                    )}
+                  >
+                    {t('grid')}
+                  </button>
+                  <button
+                    onClick={() => setView('map')}
+                    className={cn(
+                      'px-3 py-2 text-sm font-medium rounded-md transition-all duration-200',
+                      view === 'map'
+                        ? 'bg-white text-midnight-black shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900'
+                    )}
+                  >
+                    {t('map')}
+                  </button>
+                </div>
+                {!userLocation && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={requestLocation}
+                    className="ml-2"
+                  >
+                    {t('useMyLocation', { defaultValue: 'Use my location' })}
+                  </Button>
+                )}
               </div>
             </div>
 
@@ -300,7 +314,7 @@ export function TourismPage() {
                     <AttractionCard
                       key={attraction.id}
                       attraction={attraction}
-                      variant="clean"
+                      variant="default"
                       onViewDetails={setSelectedAttraction}
                       onNavigate={handleNavigate}
                     />

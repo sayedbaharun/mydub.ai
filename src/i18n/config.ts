@@ -31,7 +31,8 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    debug: process.env.NODE_ENV === 'development',
+    // Disable noisy i18n debug logs unless explicitly enabled
+    debug: import.meta.env.VITE_I18N_DEBUG === 'true',
     
     ns: namespaces,
     defaultNS,
@@ -51,6 +52,14 @@ i18n
     
     // We'll add resources after loading them
     resources: {},
+
+    // Avoid rendering null/empty strings and silence missing-key warnings
+    returnNull: false,
+    returnEmptyString: false,
+    saveMissing: false,
+    missingKeyHandler: () => {
+      // no-op: prevents console warnings for missing keys in dev
+    },
   })
 
 // Add direction to i18n instance

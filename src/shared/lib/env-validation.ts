@@ -122,8 +122,8 @@ For production:
         // In production, throw error to prevent app from starting
         throw new Error(errorMessage)
       } else {
-        // In development, log error but allow app to continue
-        console.error(errorMessage)
+        // In development, warn (not error) to avoid red console noise
+        console.warn(errorMessage)
       }
     }
 

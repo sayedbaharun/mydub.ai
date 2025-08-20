@@ -24,6 +24,10 @@ const PrivacyCenterPage = lazy(() => import('@/features/legal/components/Privacy
 const ComplianceMonitoringDashboard = lazy(
   () => import('@/features/legal/components/ComplianceMonitoringDashboard')
 )
+// Newly enabled legal pages
+const TermsOfServicePage = lazy(() => import('@/features/legal/pages/TermsOfServicePage'))
+const ContentPolicyPage = lazy(() => import('@/features/legal/pages/ContentPolicyPage'))
+const AIEthicsPage = lazy(() => import('@/features/legal/pages/AIEthicsPage'))
 
 // Admin pages
 const AdminComplianceDashboard = lazy(
@@ -58,7 +62,9 @@ const NewsPage = lazy(() => import('@/features/news/pages/NewsPage'))
 const NewsDetailPage = lazy(() =>
   import('@/features/news/pages/NewsDetailPage').then((m) => ({ default: m.NewsDetailPage }))
 )
-const BookmarksPage = lazy(() => import('@/features/bookmarks/pages/BookmarksPage'))
+const BookmarksPage = lazy(() =>
+  import('@/features/bookmarks/pages/BookmarksPage').then((m) => ({ default: m.BookmarksPage }))
+)
 const TourismPage = lazy(() =>
   import('@/features/tourism/pages/TourismPage').then((m) => ({ default: m.TourismPage }))
 )
@@ -288,41 +294,26 @@ export const router = createBrowserRouter([
         path: 'privacy',
         element: withSuspense(DynamicPrivacyPolicyPage),
       },
-      // {
-      //   id: 'privacy-static',
-      //   path: 'privacy-static',
-      //   element: withSuspense(PrivacyPolicyPage),
-      // },
-      // {
-      //   id: 'terms',
-      //   path: 'terms',
-      //   element: withSuspense(EnhancedTermsOfServicePage),
-      // },
-      // {
-      //   id: 'terms-static',
-      //   path: 'terms-static',
-      //   element: withSuspense(TermsOfServicePage),
-      // },
+      {
+        id: 'terms',
+        path: 'terms',
+        element: withSuspense(TermsOfServicePage),
+      },
       {
         id: 'cookies',
         path: 'cookies',
         element: withSuspense(CookiePolicyPage),
       },
-      // {
-      //   id: 'dpa',
-      //   path: 'dpa',
-      //   element: withSuspense(DataProcessingAgreementPage),
-      // },
-      // {
-      //   id: 'content-policy',
-      //   path: 'legal/content-policy',
-      //   element: withSuspense(ContentPolicyPage),
-      // },
-      // {
-      //   id: 'ai-ethics',
-      //   path: 'legal/ai-ethics',
-      //   element: withSuspense(AIEthicsPage),
-      // },
+      {
+        id: 'content-policy',
+        path: 'legal/content-policy',
+        element: withSuspense(ContentPolicyPage),
+      },
+      {
+        id: 'ai-ethics',
+        path: 'legal/ai-ethics',
+        element: withSuspense(AIEthicsPage),
+      },
       {
         id: 'privacy-center',
         path: 'user/privacy-center',
