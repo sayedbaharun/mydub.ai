@@ -91,6 +91,12 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 - **Analytics**: Google Analytics, Sentry
 - **Email**: SendGrid configuration
 
+#### Sentry (for QC alerts & breadcrumbs)
+```env
+# Enable Sentry breadcrumbs/alerts for Quality Control review actions
+VITE_SENTRY_DSN=your_sentry_dsn
+```
+
 Check `.env.example` for the complete list and setup instructions.
 
 ## Features
@@ -102,6 +108,17 @@ Check `.env.example` for the complete list and setup instructions.
 - 📱 Responsive Design
 - 🎭 Beautiful Animations with Framer Motion
 - 📝 Type-Safe Forms with React Hook Form and Zod
+
+### Quality Control Reviews
+- Random Review panel at `/admin/quality-control`.
+- Three views: `Content`, `Reader`, `Mobile`.
+- Actions: `Approve`, `Flag`, `Reject`, `Request Revision`.
+- Multi-criteria scoring with weighted overall score.
+- Optional toggle to apply status change to `news_articles`.
+- Reviews persisted to Supabase table `quality_reviews`.
+- If Sentry is configured, breadcrumbs are recorded for:
+  - Low overall score (< 80): `qc.low_score`
+  - Flag/Reject actions: `qc.flag_or_reject`
 
 ## Project Structure
 

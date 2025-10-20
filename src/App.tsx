@@ -7,6 +7,7 @@ import { MonitoringProvider } from './app/providers/MonitoringProvider'
 import { UserPreferencesProvider } from './app/providers/UserPreferencesProvider'
 import { OnboardingProvider } from './app/providers/OnboardingProvider'
 import { PWAProvider } from '@/shared/components/pwa'
+import { ThemeProvider } from '@/shared/components/theme/ThemeProvider'
 import { Toaster } from '@/shared/components/ui/sonner'
 import { PWAInstallPrompt } from '@/shared/components/PWAInstallPrompt'
 import { OfflineIndicator } from '@/shared/components/OfflineIndicator'
@@ -47,29 +48,31 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <I18nProvider>
-        <ScreenReaderProvider>
-          <AuthProvider>
-            <MonitoringProvider>
-              <UserPreferencesProvider>
-                <OnboardingProvider>
-                  <PWAProvider>
-                    <SkipLinks />
-                    <FocusIndicator />
-                    <AriaLabelProvider />
-                    <RouteAnnouncer />
-                    <OfflineIndicator />
-                    <RouterProvider router={router} />
-                    <PWAInstallPrompt />
-                    <CookieConsent />
-                    <Toaster />
-                  </PWAProvider>
-                </OnboardingProvider>
-              </UserPreferencesProvider>
-            </MonitoringProvider>
-          </AuthProvider>
-        </ScreenReaderProvider>
-      </I18nProvider>
+      <ThemeProvider defaultTheme="system">
+        <I18nProvider>
+          <ScreenReaderProvider>
+            <AuthProvider>
+              <MonitoringProvider>
+                <UserPreferencesProvider>
+                  <OnboardingProvider>
+                    <PWAProvider>
+                      <SkipLinks />
+                      <FocusIndicator />
+                      <AriaLabelProvider />
+                      <RouteAnnouncer />
+                      <OfflineIndicator />
+                      <RouterProvider router={router} />
+                      <PWAInstallPrompt />
+                      <CookieConsent />
+                      <Toaster />
+                    </PWAProvider>
+                  </OnboardingProvider>
+                </UserPreferencesProvider>
+              </MonitoringProvider>
+            </AuthProvider>
+          </ScreenReaderProvider>
+        </I18nProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   )
 }

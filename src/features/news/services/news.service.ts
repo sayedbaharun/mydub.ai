@@ -4,12 +4,16 @@ import { ExternalAPIsService } from '../../../shared/services/external-apis'
 import { supabase } from '../../../shared/lib/supabase'
 
 export class NewsService {
+  // Feature flags (Vite env)
+  private static ENABLE_LOCAL = import.meta.env.VITE_ENABLE_LOCAL_NEWS === 'true'
+  private static ENABLE_MOCKS = import.meta.env.VITE_ENABLE_NEWS_MOCKS === 'true'
+  private static ENABLE_EXTERNAL = import.meta.env.VITE_ENABLE_NEWS_API === 'true'
+
   // Helper function to fix broken image URLs
   private static fixImageUrl(imageUrl?: string): string {
     if (!imageUrl) {
       return 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33?w=800&h=600&fit=crop&auto=format&q=80'
     }
-    
     // Handle relative paths from news_articles directory
     if (imageUrl.startsWith('images/')) {
       // Convert relative path to public directory path
@@ -23,6 +27,54 @@ export class NewsService {
     
     // Return the URL as-is if it's already a full URL
     return imageUrl
+  }
+
+  // Create a stable ID for external API articles using URL hash
+  private static externalId(externalArticle: any): string {
+    const key: string = externalArticle?.url || externalArticle?.link || externalArticle?.title || ''
+    const str = String(key)
+    // djb2 hash
+    let hash = 5381
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) + hash) + str.charCodeAt(i)
+      hash = hash & 0xffffffff
+    }
+    // Ensure positive and to base36 for compactness
+    const id = Math.abs(hash).toString(36)
+    return `news-api-${id}`
+  }
+
+  // Normalize category to allowed union values
+  private static normalizeCategory(input?: string): NewsArticle['category'] {
+    const allowed: NewsArticle['category'][] = [
+      'local',
+      'business',
+      'technology',
+      'sports',
+      'entertainment',
+      'lifestyle',
+      'opinion',
+      'general'
+    ]
+    const v = (input || '').toLowerCase() as NewsArticle['category']
+    return allowed.includes(v) ? v : 'general'
+  }
+
+  // Dubai filters
+  private static isDubaiText(text?: string): boolean {
+    if (!text) return false
+    const t = text.toLowerCase()
+    return t.includes('dubai') || t.includes('uae') || t.includes('united arab emirates')
+  }
+
+  private static isDubaiArticle(article: NewsArticle): boolean {
+    return (
+      NewsService.isDubaiText(article.title) ||
+      NewsService.isDubaiText(article.summary) ||
+      NewsService.isDubaiText(article.content) ||
+      (article.tags || []).some(tag => NewsService.isDubaiText(tag)) ||
+      article.category === 'local'
+    )
   }
 
   // Convert our article format to NewsArticle format
@@ -48,7 +100,7 @@ export class NewsService {
       updatedAt: article.publish_date,
       url: `/news/${article.headline.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
       imageUrl: this.fixImageUrl(article.image_path),
-      category: article.category.toLowerCase(),
+      category: this.normalizeCategory(article.category),
       tags: [article.category.toLowerCase()],
       viewCount: Math.floor(Math.random() * 1000) + 100,
       sentiment: 'positive',
@@ -64,21 +116,19 @@ export class NewsService {
     try {
       // First, try to get articles from our database
       let query = supabase
-        .from('articles')
+        .from('news_articles')
         .select('*')
         .eq('status', 'published')
         .order('published_at', { ascending: false })
         .limit(50)
 
-      // Handle both single category and multiple categories filters
-      if (filters?.category && filters.category !== 'all') {
-        query = query.eq('category', filters.category)
-      } else if (filters?.categories && filters.categories.length > 0) {
+      // Handle categories filter (array)
+      if (filters?.categories && filters.categories.length > 0) {
         query = query.in('category', filters.categories)
       }
 
-      if (filters?.searchQuery || filters?.search) {
-        const searchTerm = filters.searchQuery || filters.search
+      if (filters?.search) {
+        const searchTerm = filters.search
         query = query.or(`title.ilike.%${searchTerm}%,summary.ilike.%${searchTerm}%`)
       }
 
@@ -107,62 +157,42 @@ export class NewsService {
           updatedAt: article.updated_at,
           url: `/news/${article.slug || article.id}`,
           imageUrl: this.fixImageUrl(article.featured_image),
-          category: article.category,
+          category: this.normalizeCategory(article.category),
           tags: article.tags || [],
           viewCount: article.view_count || 0,
-          sentiment: 'neutral',
+          sentiment: 'neutral' as const,
           isBreaking: article.is_breaking_news || false,
           isFeatured: article.is_featured || false,
           hasVideo: false,
           readTime: Math.ceil(article.content.replace(/<[^>]*>/g, '').split(' ').length / 200)
-        }))
+        } as NewsArticle))
 
-        // Always return database articles if we have any
-        return formattedArticles
+        // Always return database articles if we have any (Dubai-only)
+        return formattedArticles.filter(a => NewsService.isDubaiArticle(a))
       }
 
-      // Try to get real news from NewsAPI as fallback
-      const newsApiData = await ExternalAPIsService.fetchDubaiNews()
+      // Try to get real news from NewsAPI as fallback (only when enabled)
+      const newsApiData = NewsService.ENABLE_EXTERNAL
+        ? await ExternalAPIsService.fetchDubaiNews()
+        : null
       
       if (newsApiData && newsApiData.articles && newsApiData.articles.length > 0) {
         // Convert NewsAPI articles to our format
-        const apiArticles = newsApiData.articles.map((article, index) => ({
-          id: `news-api-${index}-${Date.now()}`,
-          title: article.title,
-          titleAr: article.title, // Would need translation
-          content: article.content || article.description || '',
-          contentAr: article.content || article.description || '', // Would need translation
-          summary: article.description || article.title,
-          summaryAr: article.description || article.title,
-          source: {
-            id: article.source.name.toLowerCase().replace(/\s+/g, '-'),
-            name: article.source.name,
-            nameAr: article.source.name,
-            logo: null,
-            website: article.url,
-            credibility: 0.8
-          },
-          author: 'News Desk',
-          publishedAt: article.publishedAt,
-          updatedAt: article.publishedAt,
-          url: article.url,
-          imageUrl: this.fixImageUrl(article.urlToImage),
-          category: 'news',
-          tags: ['Dubai', 'UAE', 'news'],
-          viewCount: Math.floor(Math.random() * 1000) + 100,
-          sentiment: 'neutral',
-          isBreaking: false,
-          isFeatured: index < 3,
-          hasVideo: false,
-          readTime: Math.ceil((article.content || article.description || '').split(' ').length / 200)
-        }))
+        const apiArticles: NewsArticle[] = newsApiData.articles
+          .map((external: any) => this.convertExternalArticle(external))
+          .map((a, index) => ({
+            ...a,
+            isFeatured: index < 3,
+            viewCount: Math.floor(Math.random() * 1000) + 100
+          } as NewsArticle))
         
-        // Also get articles from content distribution
-        const allArticles = contentDistributionService.getAllArticles()
-        const localArticles = allArticles.map(article => this.convertToNewsArticle(article))
-        
-        // Combine both sources, with API articles first
-        let combinedArticles = [...apiArticles, ...localArticles]
+        // Optionally include local articles from content distribution
+        let combinedArticles: NewsArticle[] = [...apiArticles]
+        if (NewsService.ENABLE_LOCAL) {
+          const allArticles = contentDistributionService.getAllArticles()
+          const localArticles: NewsArticle[] = allArticles.map(article => this.convertToNewsArticle(article))
+          combinedArticles = [...apiArticles, ...localArticles]
+        }
         
         // Apply filters if provided
         if (filters?.search) {
@@ -182,37 +212,47 @@ export class NewsService {
         // Sort by publish date (newest first)
         combinedArticles.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
         
-        return combinedArticles
+        // Dubai-only
+        return combinedArticles.filter(a => NewsService.isDubaiArticle(a))
       } else {
-        // Fallback to local content if API fails
-        const allArticles = contentDistributionService.getAllArticles()
-        const newsArticles = allArticles.map(article => this.convertToNewsArticle(article))
-        
-        // Apply filters if provided
-        let filteredArticles = newsArticles
-        
-        if (filters?.search) {
-          const searchLower = filters.search.toLowerCase()
-          filteredArticles = filteredArticles.filter(article =>
-            article.title.toLowerCase().includes(searchLower) ||
-            article.content.toLowerCase().includes(searchLower)
-          )
+        // Fallback to local content if API fails (only when enabled)
+        if (NewsService.ENABLE_LOCAL) {
+          const allArticles = contentDistributionService.getAllArticles()
+          const newsArticles = allArticles.map(article => this.convertToNewsArticle(article))
+          
+          // Apply filters if provided
+          let filteredArticles = newsArticles
+          
+          if (filters?.search) {
+            const searchLower = filters.search.toLowerCase()
+            filteredArticles = filteredArticles.filter(article =>
+              article.title.toLowerCase().includes(searchLower) ||
+              article.content.toLowerCase().includes(searchLower)
+            )
+          }
+          
+          if (filters?.categories && filters.categories.length > 0) {
+            filteredArticles = filteredArticles.filter(article =>
+              filters.categories.includes(article.category)
+            )
+          }
+          
+          // Sort by publish date (newest first)
+          filteredArticles.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+          
+          // Dubai-only
+          return filteredArticles.filter(a => NewsService.isDubaiArticle(a))
         }
-        
-        if (filters?.categories && filters.categories.length > 0) {
-          filteredArticles = filteredArticles.filter(article =>
-            filters.categories.includes(article.category)
-          )
-        }
-        
-        // Sort by publish date (newest first)
-        filteredArticles.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-        
-        return filteredArticles
+        // If local disabled, return empty list instead of local fallback
+        return []
       }
     } catch (error) {
       console.error('Error getting articles:', error)
-      return this.getMockNewsData(filters?.search || 'Dubai UAE')
+      // Only use mock data when explicitly enabled
+      if (NewsService.ENABLE_MOCKS) {
+        return this.getMockNewsData(filters?.search || 'Dubai UAE')
+      }
+      return []
     }
   }
 
@@ -387,7 +427,7 @@ export class NewsService {
       updatedAt: dbArticle.updated_at,
       url: dbArticle.url || `/news/${dbArticle.id}`,
       imageUrl: this.fixImageUrl(dbArticle.image_url),
-      category: dbArticle.category || 'general',
+      category: this.normalizeCategory(dbArticle.category),
       tags: dbArticle.tags || [],
       viewCount: dbArticle.view_count || 0,
       sentiment: dbArticle.sentiment || 'neutral',
@@ -400,14 +440,21 @@ export class NewsService {
 
   // Convert external API article to NewsArticle format
   private static convertExternalArticle(externalArticle: any): NewsArticle {
+    // Derive substantive content/summary and strip truncation markers like "[+123 chars]"
+    const rawContent = externalArticle.content || externalArticle.description || externalArticle.title || ''
+    const rawSummary = externalArticle.description || externalArticle.title || ''
+    const stripTruncation = (s: string) => s.replace(/\s*\[\+\d+\s*chars?\]\s*$/i, '').trim()
+    const contentText = stripTruncation(rawContent)
+    const summaryText = stripTruncation(rawSummary) || stripTruncation(externalArticle.title || '')
+
     return {
-      id: `external-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: this.externalId(externalArticle),
       title: externalArticle.title,
       titleAr: externalArticle.title,
-      content: externalArticle.content || externalArticle.description || '',
-      contentAr: externalArticle.content || externalArticle.description || '',
-      summary: externalArticle.description || externalArticle.title,
-      summaryAr: externalArticle.description || externalArticle.title,
+      content: contentText,
+      contentAr: contentText,
+      summary: summaryText,
+      summaryAr: summaryText,
       source: {
         id: externalArticle.source?.name?.toLowerCase().replace(/\s+/g, '-') || 'external',
         name: externalArticle.source?.name || 'External Source',
@@ -421,50 +468,17 @@ export class NewsService {
       updatedAt: externalArticle.publishedAt,
       url: externalArticle.url,
       imageUrl: this.fixImageUrl(externalArticle.urlToImage),
-      category: 'news',
+      category: 'general',
       tags: ['Dubai', 'UAE'],
       viewCount: 0,
       sentiment: 'neutral',
       isBreaking: false,
       isFeatured: false,
       hasVideo: false,
-      readTime: Math.ceil((externalArticle.content || externalArticle.description || '').split(' ').length / 200)
+      readTime: Math.ceil((contentText || summaryText).split(' ').length / 200) || 1
     }
   }
-
-  // Subscribe to real-time article updates
-  static async subscribeToArticles(
-    callback: (article: NewsArticle) => void
-  ): Promise<() => void> {
-    // Subscribe to database changes
-    const channel = supabase
-      .channel('news-articles')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'news_articles'
-        },
-        (payload) => {
-          const article = this.convertDatabaseArticle(payload.new)
-          callback(article)
-        }
-      )
-      .subscribe()
-    
-    // Also subscribe to external API updates
-    const externalUnsubscribe = ExternalAPIsService.subscribeToNewsUpdates((externalArticle) => {
-      const article = this.convertExternalArticle(externalArticle)
-      callback(article)
-    })
-    
-    // Return combined unsubscribe function
-    return () => {
-      supabase.removeChannel(channel)
-      externalUnsubscribe()
-    }
-  }
+  
 
   // Sync news from external APIs to database
   static async syncNewsFromAPI(): Promise<{ success: boolean; synced: number; errors: string[] }> {

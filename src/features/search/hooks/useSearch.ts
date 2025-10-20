@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { searchService } from '../services/searchService';
+import { searchService } from '../services/search.service';
 import type { SearchFilters, SearchResponse } from '@/shared/types/database';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 

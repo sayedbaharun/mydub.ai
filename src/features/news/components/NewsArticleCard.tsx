@@ -10,11 +10,13 @@ import {
   Minus
 } from 'lucide-react'
 import { cn } from '@/shared/lib/utils'
-import { NewsCard } from '@/shared/components/ui/card-modern'
+import { IntelligenceCard } from '@/shared/components/ui/intelligence-card'
 import { Badge } from '@/shared/components/ui/badge'
 import { Button } from '@/shared/components/ui/button'
 import { CompactTTSButton } from '@/shared/components/accessibility/CompactTTSButton'
 import { BookmarkButton } from '@/shared/components/BookmarkButton'
+import { AIDisclosureBadge } from '@/shared/components/ai/AIDisclosureBadge'
+import { WhyAmISeeingThis } from '@/features/transparency/components/WhyAmISeeingThis'
 import { NewsArticle } from '../types'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -123,7 +125,7 @@ export function NewsArticleCard({
   // Clean variant - Jony Ive inspired minimal design
   if (variant === 'clean') {
     return (
-      <article 
+      <article
         className="group cursor-pointer transition-all duration-300 hover:opacity-95"
         onClick={() => onArticleClick?.(article)}
       >
@@ -134,6 +136,17 @@ export function NewsArticleCard({
               alt={article.title}
               className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
             />
+            {article.aiMetadata && (
+              <div className="absolute top-3 right-3">
+                <AIDisclosureBadge
+                  variant="compact"
+                  sourcesAnalyzed={article.aiMetadata.sourcesAnalyzed}
+                  confidenceScore={article.aiMetadata.confidenceScore}
+                  humanReviewed={article.aiMetadata.humanReviewed}
+                  generatedAt={article.aiMetadata.generatedAt}
+                />
+              </div>
+            )}
           </div>
         )}
         
@@ -169,94 +182,115 @@ export function NewsArticleCard({
     )
   }
 
-  // Enhanced modern card design
+  // Enhanced modern card design with IntelligenceCard
   const enhancedCard = (
-    <div className="relative h-full group">
-      <NewsCard
+    <IntelligenceCard
+      variant="default"
+      title={isRTL && article.titleAr ? article.titleAr : article.title}
+      description={isRTL && article.summaryAr ? article.summaryAr : article.summary}
+      image={article.imageUrl}
+      imageAlt={article.title}
+      category={t(`news.category.${article.category}`)}
+      date={formatSafeDate(article.publishedAt)}
+      author={article.author}
+      href={`/news/${article.id}`}
+      onClick={() => onArticleClick?.(article)}
+      // Intelligence metadata
+      aiGenerated={!!article.aiMetadata}
+      confidenceScore={article.aiMetadata?.confidenceScore}
+      sourcesAnalyzed={article.aiMetadata?.sourcesAnalyzed}
+      viewCount={article.viewCount}
+      readTime={article.readTime}
+      sentiment={article.sentiment}
+      trending={article.isBreaking}
+    >
+      {/* Action buttons as custom children */}
+      <div className="flex items-center gap-1 pt-3 border-t border-gray-100">
+        <CompactTTSButton
+          text={`${article.title}. ${article.summary || ''}`}
+          title={article.title}
+          language="en"
+          variant="ghost"
+          size="sm"
+          className="h-8 w-8 p-0 hover:bg-gray-100"
+        />
+        <BookmarkButton
+          contentId={article.id}
+          contentType="article"
+          title={article.title}
+          description={article.summary}
+          imageUrl={article.imageUrl}
+          url={article.url}
+          variant="icon"
+          size="sm"
+          className="h-8 w-8 p-0 hover:bg-gray-100"
+        />
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleShare}
+          className="h-8 w-8 p-0 hover:bg-gray-100"
+        >
+          <Share2 className="h-4 w-4" />
+        </Button>
+        <WhyAmISeeingThis article={article} variant="icon" className="h-8 w-8 p-0" />
+      </div>
+    </IntelligenceCard>
+  )
+
+  // For featured variant, use IntelligenceCard's featured variant
+  if (variant === 'featured') {
+    return (
+      <IntelligenceCard
+        variant="featured"
         title={isRTL && article.titleAr ? article.titleAr : article.title}
         description={isRTL && article.summaryAr ? article.summaryAr : article.summary}
         image={article.imageUrl}
+        imageAlt={article.title}
         category={t(`news.category.${article.category}`)}
         date={formatSafeDate(article.publishedAt)}
         author={article.author}
         href={`/news/${article.id}`}
         onClick={() => onArticleClick?.(article)}
-      />
-      
-      {/* Overlay badges and actions */}
-      {article.imageUrl && (
-        <div className="absolute top-3 left-3 right-3 flex justify-between items-start opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="flex gap-2">
-            {article.videoUrl && (
-              <Badge className="bg-black/80 text-white border-0">
-                <Play className="h-3 w-3 mr-1" />
-                Video
-              </Badge>
-            )}
-            {article.aiSummary && (
-              <Badge className="bg-purple-600/90 text-white border-0">
-                <Sparkles className="h-3 w-3 mr-1" />
-                AI
-              </Badge>
-            )}
-          </div>
+        aiGenerated={!!article.aiMetadata}
+        confidenceScore={article.aiMetadata?.confidenceScore}
+        sourcesAnalyzed={article.aiMetadata?.sourcesAnalyzed}
+        viewCount={article.viewCount}
+        readTime={article.readTime}
+        sentiment={article.sentiment}
+        trending={article.isBreaking}
+      >
+        <div className="flex items-center gap-1 pt-3 border-t border-gray-100">
+          <CompactTTSButton
+            text={`${article.title}. ${article.summary || ''}`}
+            title={article.title}
+            language="en"
+            variant="ghost"
+            size="sm"
+            className="h-8 w-8 p-0 hover:bg-gray-100"
+          />
+          <BookmarkButton
+            contentId={article.id}
+            contentType="article"
+            title={article.title}
+            description={article.summary}
+            imageUrl={article.imageUrl}
+            url={article.url}
+            variant="icon"
+            size="sm"
+            className="h-8 w-8 p-0 hover:bg-gray-100"
+          />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleShare}
+            className="h-8 w-8 p-0 hover:bg-gray-100"
+          >
+            <Share2 className="h-4 w-4" />
+          </Button>
+          <WhyAmISeeingThis article={article} variant="icon" className="h-8 w-8 p-0" />
         </div>
-      )}
-      
-      {/* Bottom overlay with stats and actions */}
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white/95 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3 text-sm text-gray-600">
-            <div className="flex items-center gap-1">
-              <Clock className="h-3 w-3" />
-              <span>{article.readTime} min</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Eye className="h-3 w-3" />
-              <span>{article.viewCount?.toLocaleString() || '0'}</span>
-            </div>
-            {getSentimentIcon()}
-          </div>
-          <div className="flex items-center gap-1">
-            <CompactTTSButton
-              text={`${article.title}. ${article.summary || ''}`}
-              title={article.title}
-              language="en"
-              variant="ghost"
-              size="sm"
-              className="h-8 w-8 p-0 hover:bg-gray-100"
-            />
-            <BookmarkButton
-              contentId={article.id}
-              contentType="article"
-              title={article.title}
-              description={article.summary}
-              imageUrl={article.image_url}
-              url={article.url}
-              variant="icon"
-              size="sm"
-              className="h-8 w-8 p-0 hover:bg-gray-100"
-            />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleShare}
-              className="h-8 w-8 p-0 hover:bg-gray-100"
-            >
-              <Share2 className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-
-  // For featured variant, make it larger
-  if (variant === 'featured') {
-    return (
-      <div className="md:col-span-2 md:row-span-2">
-        {enhancedCard}
-      </div>
+      </IntelligenceCard>
     )
   }
 

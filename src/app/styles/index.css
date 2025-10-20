@@ -2,6 +2,136 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Signature Typography - Jony Ive Inspired */
+@layer components {
+  /* Display Headlines - Ultra light, generous spacing */
+  .text-display-hero {
+    @apply font-display text-7xl font-light tracking-tighter leading-none;
+  }
+
+  .text-display-1 {
+    @apply font-display text-6xl font-light tracking-tight leading-tight;
+  }
+
+  .text-display-2 {
+    @apply font-display text-5xl font-light tracking-tight leading-tight;
+  }
+
+  .text-display-3 {
+    @apply font-display text-4xl font-light tracking-tight leading-snug;
+  }
+
+  /* Headlines - Editorial content */
+  .text-headline-1 {
+    @apply text-3xl font-light tracking-tight leading-snug text-midnight-black;
+  }
+
+  .text-headline-2 {
+    @apply text-2xl font-light tracking-tight leading-snug text-midnight-black;
+  }
+
+  .text-headline-3 {
+    @apply text-xl font-medium tracking-tight leading-snug text-midnight-black;
+  }
+
+  /* Body Text - Optimized for readability */
+  .text-body-large {
+    @apply font-body text-lg font-normal leading-relaxed text-gray-800;
+  }
+
+  .text-body {
+    @apply font-body text-base font-normal leading-relaxed text-gray-800;
+  }
+
+  .text-body-small {
+    @apply font-body text-sm font-normal leading-normal text-gray-600;
+  }
+
+  /* UI Text - Interface elements */
+  .text-ui-large {
+    @apply text-base font-medium leading-normal tracking-wide;
+  }
+
+  .text-ui {
+    @apply text-sm font-medium leading-normal tracking-wide;
+  }
+
+  .text-ui-small {
+    @apply text-xs font-medium leading-tight tracking-wider uppercase;
+  }
+
+  /* Caption & Labels */
+  .text-caption {
+    @apply text-xs font-normal leading-tight text-gray-500;
+  }
+
+  .text-caption-bold {
+    @apply text-xs font-semibold leading-tight text-gray-700 tracking-wide uppercase;
+  }
+
+  /* Emphasis variants */
+  .text-emphasis {
+    @apply font-medium text-dubai-gold-700;
+  }
+
+  .text-emphasis-strong {
+    @apply font-semibold text-dubai-gold-800;
+  }
+
+  /* Link styles */
+  .text-link {
+    @apply text-ai-blue hover:text-dubai-gold-600 transition-colors duration-200;
+  }
+
+  /* Article content - long-form reading */
+  .prose-mydub {
+    @apply font-body text-base leading-relaxed text-gray-800;
+  }
+
+  .prose-mydub h1 {
+    @apply text-headline-1 mb-6 mt-8;
+  }
+
+  .prose-mydub h2 {
+    @apply text-headline-2 mb-4 mt-6;
+  }
+
+  .prose-mydub h3 {
+    @apply text-headline-3 mb-3 mt-5;
+  }
+
+  .prose-mydub p {
+    @apply mb-4;
+  }
+
+  .prose-mydub a {
+    @apply text-link underline;
+  }
+
+  .prose-mydub strong {
+    @apply font-semibold text-gray-900;
+  }
+
+  .prose-mydub em {
+    @apply italic;
+  }
+
+  /* Responsive typography */
+  @media (max-width: 640px) {
+    .text-display-hero {
+      @apply text-5xl;
+    }
+
+    .text-display-1 {
+      @apply text-4xl;
+    }
+
+    .text-display-2 {
+      @apply text-3xl;
+    }
+  }
+}
+
 /* Mac-style scrollbar hiding */
 @layer utilities {
   .scrollbar-hide {
@@ -89,8 +219,20 @@
 
     --chart-5: 27 87% 67%;
 
-    --radius: 0.5rem
-  ;
+    --radius: 0.5rem;
+
+    /* Dubai Gold - Primary Brand Accent */
+    --dubai-gold-50: 45 100% 98%;    /* #FDFBF7 */
+    --dubai-gold-100: 45 80% 96%;    /* #FAF6ED */
+    --dubai-gold-200: 45 70% 91%;    /* #F5EDD9 */
+    --dubai-gold-300: 45 60% 82%;    /* #EBD9B3 */
+    --dubai-gold-400: 45 65% 71%;    /* #DFC58D */
+    --dubai-gold-500: 45 65% 52%;    /* #D4AF37 - PRIMARY */
+    --dubai-gold-600: 46 61% 47%;    /* #C09E2F */
+    --dubai-gold-700: 46 61% 40%;    /* #A68628 */
+    --dubai-gold-800: 46 62% 33%;    /* #8C6E21 */
+    --dubai-gold-900: 46 62% 26%;    /* #6B541A */
+    --dubai-gold-950: 46 62% 19%;    /* #4D3C12 */
 
     --sidebar-background: 0 0% 98%;
 

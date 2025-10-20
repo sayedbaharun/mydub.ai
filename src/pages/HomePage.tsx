@@ -4,6 +4,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
 import { Input } from '@/shared/components/ui/input'
+import { IntelligenceCard } from '@/shared/components/ui/intelligence-card'
 import {
   Calendar,
   Video,
@@ -347,9 +348,9 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-midnight-black via-gray-900 to-midnight-black text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-midnight-black via-gray-900 to-midnight-black text-white">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512632578888-169bbbc64f33')] bg-cover bg-center opacity-20"></div>
 
         <div className="relative w-full py-12 sm:py-16 lg:py-20">
@@ -502,8 +503,10 @@ export default function HomePage() {
       <div className="mx-auto max-w-6xl space-y-20 px-4 py-12 sm:space-y-24 sm:px-6 sm:py-16">
         {/* Live Articles Section */}
         <section>
-          <div className="mb-6 flex flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center">
-            <div>
+          <div className="mb-8 flex flex-col justify-between gap-4 sm:mb-12 sm:flex-row sm:items-center">
+            <div className="relative">
+              {/* Dubai Gold accent line */}
+              <div className="absolute -left-6 top-0 h-full w-1 bg-gradient-to-b from-dubai-gold-500 to-dubai-gold-300" />
               <h2 className="mb-2 text-2xl font-light tracking-tight text-midnight-black sm:text-3xl lg:text-4xl">
                 {t('home.sections.todayInDubai')}
               </h2>
@@ -534,47 +537,104 @@ export default function HomePage() {
               ))}
             </div>
           ) : featuredArticles.length > 0 ? (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-              {featuredArticles.map((article) => (
-                <Link key={article.id} to={`/news/${article.id}`} className="group block">
-                  <Card className="overflow-hidden border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:opacity-95">
-                    <div className="relative">
-                      <div className="relative h-48 overflow-hidden">
-                        <img
-                          src={
-                            article.imageUrl ||
-                            'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'
-                          }
-                          alt={article.title}
-                          className="h-full w-full object-cover"
-                          onError={(e) => {
-                            e.currentTarget.src =
-                              'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'
-                          }}
+            <>
+              {/* Asymmetric Jony Ive-inspired layout with generous white space */}
+              <div className="space-y-12">
+                {/* Featured Article - Hero */}
+                {featuredArticles[0] && (
+                  <div className="mb-16">
+                    <IntelligenceCard
+                      variant="featured"
+                      title={featuredArticles[0].title}
+                      description={featuredArticles[0].summary}
+                      image={featuredArticles[0].imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
+                      imageAlt={featuredArticles[0].title}
+                      category={t(`news.category.${featuredArticles[0].category}`)}
+                      date={new Date(featuredArticles[0].publishedAt).toLocaleDateString()}
+                      author={featuredArticles[0].author}
+                      href={`/news/${featuredArticles[0].id}`}
+                      readTime={featuredArticles[0].readTime}
+                      viewCount={featuredArticles[0].viewCount}
+                      aiGenerated={!!featuredArticles[0].aiMetadata}
+                      confidenceScore={featuredArticles[0].aiMetadata?.confidenceScore}
+                      sourcesAnalyzed={featuredArticles[0].aiMetadata?.sourcesAnalyzed}
+                      sentiment={featuredArticles[0].sentiment}
+                      trending={featuredArticles[0].isBreaking}
+                    />
+                  </div>
+                )}
+
+                {/* Asymmetric Grid - Articles 2-4 */}
+                {featuredArticles.length > 1 && (
+                  <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12">
+                    {/* Second article - spans 2 columns on desktop */}
+                    {featuredArticles[1] && (
+                      <div className="lg:col-span-2">
+                        <IntelligenceCard
+                          variant="default"
+                          title={featuredArticles[1].title}
+                          description={featuredArticles[1].summary}
+                          image={featuredArticles[1].imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
+                          imageAlt={featuredArticles[1].title}
+                          category={t(`news.category.${featuredArticles[1].category}`)}
+                          date={new Date(featuredArticles[1].publishedAt).toLocaleDateString()}
+                          author={featuredArticles[1].author}
+                          href={`/news/${featuredArticles[1].id}`}
+                          readTime={featuredArticles[1].readTime}
+                          viewCount={featuredArticles[1].viewCount}
+                          aiGenerated={!!featuredArticles[1].aiMetadata}
+                          confidenceScore={featuredArticles[1].aiMetadata?.confidenceScore}
+                          sourcesAnalyzed={featuredArticles[1].aiMetadata?.sourcesAnalyzed}
+                          sentiment={featuredArticles[1].sentiment}
                         />
                       </div>
+                    )}
 
-                      <CardContent className="p-6">
-                        <h3 className="mb-2 line-clamp-2 text-lg font-medium tracking-tight text-midnight-black">
-                          {article.title}
-                        </h3>
-                        <p className="line-clamp-3 text-sm leading-relaxed text-gray-500">
-                          {article.summary || ''}
-                        </p>
-                        <div className="mt-4 flex items-center justify-between">
-                          <div className="text-xs text-gray-400">
-                            {article.readTime || 3} {t('app.min')} {t('readTime')}
-                          </div>
-                          <div className="text-xs text-gray-400">
-                            {article.author || t('app.name')}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </div>
-                  </Card>
-                </Link>
-              ))}
-            </div>
+                    {/* Third article - compact sidebar */}
+                    {featuredArticles[2] && (
+                      <div className="lg:col-span-1">
+                        <IntelligenceCard
+                          variant="minimal"
+                          title={featuredArticles[2].title}
+                          description={featuredArticles[2].summary}
+                          image={featuredArticles[2].imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
+                          imageAlt={featuredArticles[2].title}
+                          category={t(`news.category.${featuredArticles[2].category}`)}
+                          date={new Date(featuredArticles[2].publishedAt).toLocaleDateString()}
+                          href={`/news/${featuredArticles[2].id}`}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Lower Grid - Articles 4-6 with luxury variant */}
+                {featuredArticles.length > 3 && (
+                  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+                    {featuredArticles.slice(3, 6).map((article, index) => (
+                      <IntelligenceCard
+                        key={article.id}
+                        variant={index === 0 ? "luxury" : "default"}
+                        title={article.title}
+                        description={article.summary}
+                        image={article.imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
+                        imageAlt={article.title}
+                        category={t(`news.category.${article.category}`)}
+                        date={new Date(article.publishedAt).toLocaleDateString()}
+                        author={article.author}
+                        href={`/news/${article.id}`}
+                        readTime={article.readTime}
+                        viewCount={article.viewCount}
+                        aiGenerated={!!article.aiMetadata}
+                        confidenceScore={article.aiMetadata?.confidenceScore}
+                        sourcesAnalyzed={article.aiMetadata?.sourcesAnalyzed}
+                        sentiment={article.sentiment}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
           ) : (
             <div className="py-12 text-center">
               <p className="text-gray-500">{t('home.sections.noArticles')}</p>
@@ -587,7 +647,8 @@ export default function HomePage() {
 
         {/* Evening Experiences - Simplified */}
         <section>
-          <div className="mb-8">
+          <div className="mb-8 relative">
+            <div className="absolute -left-6 top-0 h-full w-1 bg-gradient-to-b from-dubai-gold-500 to-dubai-gold-300" />
             <h2 className="mb-2 text-2xl font-light tracking-tight text-midnight-black">
               {t('home.sections.whatToDoTonight')}
             </h2>
@@ -607,7 +668,8 @@ export default function HomePage() {
 
         {/* Explore Dubai */}
         <section>
-          <div className="mb-12">
+          <div className="mb-12 relative">
+            <div className="absolute -left-6 top-0 h-full w-1 bg-gradient-to-b from-dubai-gold-500 to-dubai-gold-300" />
             <h2 className="mb-2 text-2xl font-light tracking-tight text-midnight-black">
               {t('home.sections.exploreDubai')}
             </h2>
@@ -673,7 +735,8 @@ export default function HomePage() {
 
         {/* Video Content */}
         <section>
-          <div className="mb-12">
+          <div className="mb-12 relative">
+            <div className="absolute -left-6 top-0 h-full w-1 bg-gradient-to-b from-dubai-gold-500 to-dubai-gold-300" />
             <h2 className="mb-2 text-2xl font-light tracking-tight text-midnight-black">
               {t('home.sections.dubaiStories')}
             </h2>
@@ -693,7 +756,9 @@ export default function HomePage() {
 
         {/* Connect */}
         <section>
-          <div className="mb-12 text-center">
+          <div className="mb-12 text-center relative">
+            {/* Centered Dubai Gold accent */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 h-1 w-24 bg-gradient-to-r from-dubai-gold-500 to-dubai-gold-300 -translate-y-4" />
             <h2 className="mb-2 text-2xl font-light tracking-tight text-midnight-black">
               {t('home.sections.stayConnected')}
             </h2>

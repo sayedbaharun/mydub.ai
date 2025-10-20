@@ -92,6 +92,9 @@ export function Footer() {
               <Link to="/legal/ai-ethics" className="block text-gray-400 hover:text-white transition-colors text-sm">
                 AI Ethics
               </Link>
+              <Link to="/how-we-use-ai" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                How We Use AI
+              </Link>
             </div>
             <div className="space-y-2 pt-4">
               <h4 className="text-sm font-medium text-white">Get in Touch</h4>
@@ -124,6 +127,10 @@ export function Footer() {
               <span className="hidden md:inline">•</span>
               <Link to="/cookies" className="hover:text-white transition-colors">
                 Cookies
+              </Link>
+              <span className="hidden md:inline">•</span>
+              <Link to="/how-we-use-ai" className="hover:text-white transition-colors">
+                AI Transparency
               </Link>
               <span className="hidden md:inline">•</span>
               <div className="flex items-center gap-1">

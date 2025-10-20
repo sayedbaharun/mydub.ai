@@ -29,6 +29,7 @@ import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher'
 import { NotificationCenter } from '@/shared/components/pwa/NotificationCenter'
 import { MobileDrawer } from './MobileNav'
 import { HighContrastMode } from '@/shared/components/accessibility/HighContrastMode'
+import { ThemeToggle } from '@/shared/components/theme/ThemeToggle'
 import { useAuth, useRole } from '@/features/auth/context/AuthContext'
 import { useAnnouncer } from '@/shared/lib/accessibility'
 import { cn } from '@/shared/lib/utils'
@@ -182,6 +183,11 @@ export function Header({ className }: HeaderProps) {
             {/* High Contrast Mode - Hidden on mobile */}
             <div className="hidden sm:block">
               <HighContrastMode />
+            </div>
+
+            {/* Theme Toggle - Hidden on mobile */}
+            <div className="hidden sm:block">
+              <ThemeToggle variant="ghost" size="sm" />
             </div>
 
             {/* Notifications - Hidden on mobile */}

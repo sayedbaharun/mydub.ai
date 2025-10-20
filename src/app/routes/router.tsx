@@ -24,6 +24,15 @@ const PrivacyCenterPage = lazy(() => import('@/features/legal/components/Privacy
 const ComplianceMonitoringDashboard = lazy(
   () => import('@/features/legal/components/ComplianceMonitoringDashboard')
 )
+
+// Transparency pages
+const HowWeUseAIPage = lazy(() =>
+  import('@/features/transparency/pages/HowWeUseAI').then((m) => ({ default: m.HowWeUseAIPage }))
+)
+// Admin - Quality Control
+const QualityControlDashboardPage = lazy(
+  () => import('@/features/admin/quality-control/QualityControlDashboardPage')
+)
 // Newly enabled legal pages
 const TermsOfServicePage = lazy(() => import('@/features/legal/pages/TermsOfServicePage'))
 const ContentPolicyPage = lazy(() => import('@/features/legal/pages/ContentPolicyPage'))
@@ -315,6 +324,11 @@ export const router = createBrowserRouter([
         element: withSuspense(AIEthicsPage),
       },
       {
+        id: 'how-we-use-ai',
+        path: 'how-we-use-ai',
+        element: withSuspense(HowWeUseAIPage),
+      },
+      {
         id: 'privacy-center',
         path: 'user/privacy-center',
         element: <ProtectedRoute>{withSuspense(PrivacyCenterPage)}</ProtectedRoute>,
@@ -391,6 +405,15 @@ export const router = createBrowserRouter([
     path: '/admin/compliance',
     element: (
       <ProtectedRoute roles={['admin']}>{withSuspense(AdminComplianceDashboard)}</ProtectedRoute>
+    ),
+  },
+  {
+    id: 'admin-quality-control',
+    path: '/admin/quality-control',
+    element: (
+      <ProtectedRoute roles={['admin']}>
+        {withSuspense(QualityControlDashboardPage)}
+      </ProtectedRoute>
     ),
   },
   {

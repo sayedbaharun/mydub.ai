@@ -33,6 +33,12 @@ export interface NewsArticle {
   isBreaking?: boolean
   isFeatured?: boolean
   hasVideo?: boolean
+  aiMetadata?: {
+    sourcesAnalyzed: number
+    confidenceScore: number
+    humanReviewed: boolean
+    generatedAt: Date
+  }
 }
 
 export interface NewsFilters {
