@@ -26,6 +26,7 @@ import { NewsArticle } from '../types'
 import { NewsArticleCard } from './NewsArticleCard'
 import { LoadingSpinner } from '@/shared/components/LoadingSpinner'
 import { useTranslation } from 'react-i18next'
+import { getCategoryName } from '@/shared/utils/categoryFormatter'
 import { toast } from 'sonner'
 
 interface ArticleModalProps {
@@ -167,7 +168,7 @@ export function ArticleModal({ article, open, onOpenChange }: ArticleModalProps)
             isRTL && "flex-row-reverse"
           )}>
             <Badge variant="secondary">
-              {t(`news.category.${article.category}`)}
+              {getCategoryName(article.category, t)}
             </Badge>
             {article.aiSummary && (
               <Badge variant="secondary" className="gap-1">

@@ -9,6 +9,7 @@ import { IntelligenceCard } from '@/shared/components/ui/intelligence-card'
 import { Sparkles, Clock, Loader2 } from 'lucide-react'
 import { usePersonalizedFeed, FeedMode } from '../hooks/usePersonalizedFeed'
 import { useTranslation } from 'react-i18next'
+import { getCategoryName } from '@/shared/utils/categoryFormatter'
 import { supabase } from '@/shared/lib/supabase'
 import { useEffect } from 'react'
 
@@ -109,7 +110,7 @@ export function FeedToggle() {
                   description={articles[0].summary}
                   image={articles[0].imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
                   imageAlt={articles[0].title}
-                  category={t(`news.category.${articles[0].category}`)}
+                  category={getCategoryName(articles[0].category, t)}
                   date={new Date(articles[0].publishedAt).toLocaleDateString()}
                   author={articles[0].author}
                   href={`/news/${articles[0].id}`}
@@ -137,7 +138,7 @@ export function FeedToggle() {
                     description={articles[1].summary}
                     image={articles[1].imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
                     imageAlt={articles[1].title}
-                    category={t(`news.category.${articles[1].category}`)}
+                    category={getCategoryName(articles[1].category, t)}
                     date={new Date(articles[1].publishedAt).toLocaleDateString()}
                     author={articles[1].author}
                     href={`/news/${articles[1].id}`}
@@ -160,7 +161,7 @@ export function FeedToggle() {
                     description={articles[2].summary}
                     image={articles[2].imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
                     imageAlt={articles[2].title}
-                    category={t(`news.category.${articles[2].category}`)}
+                    category={getCategoryName(articles[2].category, t)}
                     date={new Date(articles[2].publishedAt).toLocaleDateString()}
                     href={`/news/${articles[2].id}`}
                   />
@@ -180,7 +181,7 @@ export function FeedToggle() {
                     description={article.summary}
                     image={article.imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
                     imageAlt={article.title}
-                    category={t(`news.category.${article.category}`)}
+                    category={getCategoryName(article.category, t)}
                     date={new Date(article.publishedAt).toLocaleDateString()}
                     author={article.author}
                     href={`/news/${article.id}`}

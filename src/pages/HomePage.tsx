@@ -28,6 +28,7 @@ import { ArabicPhrasesService, ArabicPhrase } from '@/shared/services/arabicPhra
 import { ExternalAPIsService } from '@/shared/services/external-apis'
 import { NewsletterService } from '@/shared/services/newsletter.service'
 import { useTranslation } from 'react-i18next'
+import { getCategoryName } from '@/shared/utils/categoryFormatter'
 import { toast } from 'sonner'
 import { useStructuredData } from '@/hooks/useStructuredData'
 
@@ -549,7 +550,7 @@ export default function HomePage() {
                       description={featuredArticles[0].summary}
                       image={featuredArticles[0].imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
                       imageAlt={featuredArticles[0].title}
-                      category={t(`news.category.${featuredArticles[0].category}`)}
+                      category={getCategoryName(featuredArticles[0].category, t)}
                       date={new Date(featuredArticles[0].publishedAt).toLocaleDateString()}
                       author={featuredArticles[0].author}
                       href={`/news/${featuredArticles[0].id}`}
@@ -576,7 +577,7 @@ export default function HomePage() {
                           description={featuredArticles[1].summary}
                           image={featuredArticles[1].imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
                           imageAlt={featuredArticles[1].title}
-                          category={t(`news.category.${featuredArticles[1].category}`)}
+                          category={getCategoryName(featuredArticles[1].category, t)}
                           date={new Date(featuredArticles[1].publishedAt).toLocaleDateString()}
                           author={featuredArticles[1].author}
                           href={`/news/${featuredArticles[1].id}`}
@@ -599,7 +600,7 @@ export default function HomePage() {
                           description={featuredArticles[2].summary}
                           image={featuredArticles[2].imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
                           imageAlt={featuredArticles[2].title}
-                          category={t(`news.category.${featuredArticles[2].category}`)}
+                          category={getCategoryName(featuredArticles[2].category, t)}
                           date={new Date(featuredArticles[2].publishedAt).toLocaleDateString()}
                           href={`/news/${featuredArticles[2].id}`}
                         />
@@ -619,7 +620,7 @@ export default function HomePage() {
                         description={article.summary}
                         image={article.imageUrl || 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33'}
                         imageAlt={article.title}
-                        category={t(`news.category.${article.category}`)}
+                        category={getCategoryName(article.category, t)}
                         date={new Date(article.publishedAt).toLocaleDateString()}
                         author={article.author}
                         href={`/news/${article.id}`}

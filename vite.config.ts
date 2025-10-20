@@ -91,13 +91,16 @@ export default defineConfig(({ command, mode }) => {
       // PWA Configuration
       VitePWA({
         registerType: 'autoUpdate',
+        // Disable service worker in development to prevent caching issues
+        injectRegister: isProduction ? 'auto' : null,
         workbox: {
           maximumFileSizeToCacheInBytes: isProduction ? 5 * 1024 * 1024 : 10 * 1024 * 1024,
           globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2,ttf,eot}'],
           globIgnores: ['**/stats.html', '**/coverage/**'],
           cleanupOutdatedCaches: true,
-          skipWaiting: true,
-          clientsClaim: true,
+          // Only skip waiting and claim clients in production
+          skipWaiting: isProduction,
+          clientsClaim: isProduction,
           runtimeCaching: [
             // API Responses
             {

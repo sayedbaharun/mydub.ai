@@ -20,6 +20,7 @@ import { WhyAmISeeingThis } from '@/features/transparency/components/WhyAmISeein
 import { NewsArticle } from '../types'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { getCategoryName } from '@/shared/utils/categoryFormatter'
 
 interface NewsArticleCardProps {
   article: NewsArticle
@@ -190,7 +191,7 @@ export function NewsArticleCard({
       description={isRTL && article.summaryAr ? article.summaryAr : article.summary}
       image={article.imageUrl}
       imageAlt={article.title}
-      category={t(`news.category.${article.category}`)}
+      category={getCategoryName(article.category, t)}
       date={formatSafeDate(article.publishedAt)}
       author={article.author}
       href={`/news/${article.id}`}
@@ -247,7 +248,7 @@ export function NewsArticleCard({
         description={isRTL && article.summaryAr ? article.summaryAr : article.summary}
         image={article.imageUrl}
         imageAlt={article.title}
-        category={t(`news.category.${article.category}`)}
+        category={getCategoryName(article.category, t)}
         date={formatSafeDate(article.publishedAt)}
         author={article.author}
         href={`/news/${article.id}`}

@@ -11,6 +11,7 @@ import {
 import { Button } from '@/shared/components/ui/button'
 import { Badge } from '@/shared/components/ui/badge'
 import { useTranslation } from 'react-i18next'
+import { getCategoryName } from '@/shared/utils/categoryFormatter'
 import type { NewsArticle } from '@/features/news/types'
 import { RecommendationExplanationService } from '../services/recommendation-explanation.service'
 
@@ -83,7 +84,7 @@ export function WhyAmISeeingThis({ article, variant = 'icon', className = '' }: 
               <h3 className="font-medium text-lg mb-2 text-midnight-black">{article.title}</h3>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Badge variant="outline" className="text-xs">
-                  {t(`news.category.${article.category}`)}
+                  {getCategoryName(article.category, t)}
                 </Badge>
                 {article.aiMetadata && (
                   <Badge variant="secondary" className="text-xs bg-violet-50 text-violet-700">
