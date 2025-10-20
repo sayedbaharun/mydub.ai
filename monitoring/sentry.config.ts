@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/react'
-import { BrowserTracing } from '@sentry/tracing'
-import { CaptureConsole } from '@sentry/integrations'
+import { captureConsoleIntegration } from '@sentry/react'
 
 export function initSentry() {
   const dsn = import.meta.env.VITE_SENTRY_DSN
@@ -15,14 +14,7 @@ export function initSentry() {
     dsn,
     environment,
     integrations: [
-      new BrowserTracing({
-        // Set sampling rate for performance monitoring
-        tracingOrigins: ['localhost', 'mydub.ai', /^\//],
-        routingInstrumentation: Sentry.reactRouterV6Instrumentation(
-          window.history
-        ),
-      }),
-      new CaptureConsole({
+      captureConsoleIntegration({
         levels: ['error', 'warn'],
       }),
     ],

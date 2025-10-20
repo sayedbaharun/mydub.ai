@@ -51,7 +51,6 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 
 // Import dashboard components
-import { SimplifiedPersonalizedDashboard } from './SimplifiedPersonalizedDashboard'
 import { DashboardOverview } from './DashboardOverview'
 import { ContentManagement } from './ContentManagement'
 import { UserManagement } from './UserManagement'
@@ -173,7 +172,7 @@ export function SidebarDashboard() {
   const renderContent = () => {
     switch (activeSection) {
       case 'ai-dashboard':
-        return <SimplifiedPersonalizedDashboard />
+        return <DashboardOverview />
       case 'overview':
         return <DashboardOverview />
       case 'articles':
@@ -234,7 +233,7 @@ export function SidebarDashboard() {
       case 'service-monitoring':
         return <GovernmentServiceMonitor />
       default:
-        return <SimplifiedPersonalizedDashboard />
+        return <DashboardOverview />
     }
   }
 
