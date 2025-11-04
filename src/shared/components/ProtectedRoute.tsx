@@ -12,15 +12,18 @@ interface ProtectedRouteProps {
   children?: React.ReactNode
 }
 
-export function ProtectedRoute({ 
-  roles = [], 
+export function ProtectedRoute({
+  roles = [],
   redirectTo = '/auth/signin',
-  children 
+  children
 }: ProtectedRouteProps) {
   const { isAuthenticated, isLoading, user } = useAuth()
   const location = useLocation()
   const hasRequiredRole = useRole(roles)
   const [sessionChecked, setSessionChecked] = React.useState(false)
+
+  // Check if auth is disabled for testing (dev mode)
+  const skipAuth = import.meta.env.VITE_SKIP_AUTH === 'true'
 
   // Add a small delay to ensure session recovery completes
   React.useEffect(() => {
@@ -30,6 +33,11 @@ export function ProtectedRoute({
 
     return () => clearTimeout(timer)
   }, [])
+
+  // DEV MODE: Skip all auth checks
+  if (skipAuth) {
+    return children || <Outlet />
+  }
 
   // Show loading spinner while checking auth status
   if (isLoading || !sessionChecked) {
@@ -68,14 +76,14 @@ export function ProtectedRoute({
               Your current role: <span className="font-medium">{user?.role || 'None'}</span>
             </p>
             <div className="flex gap-2">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => window.history.back()}
                 className="flex-1"
               >
                 Go Back
               </Button>
-              <Button 
+              <Button
                 onClick={() => window.location.href = '/'}
                 className="flex-1"
               >

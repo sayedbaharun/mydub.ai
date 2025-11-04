@@ -26,6 +26,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
   const [isInitialized, setIsInitialized] = useState(false)
 
+  // Check if auth is disabled for testing (dev mode)
+  const skipAuth = import.meta.env.VITE_SKIP_AUTH === 'true'
+
   useEffect(() => {
     let mounted = true
 
@@ -34,6 +37,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     async function initializeAuth() {
       try {
+        // DEV MODE: Auto-login as admin if auth is disabled
+        if (skipAuth) {
+          const mockAdminUser: User = {
+            id: 'dev-mode-admin-id',
+            email: 'admin@mydub.ai',
+            fullName: 'Admin (Dev Mode)',
+            role: 'admin',
+            userType: 'resident',
+            language: 'en',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          }
+
+          if (mounted) {
+            setUser(mockAdminUser)
+            setIsInitialized(true)
+            setIsLoading(false)
+            console.log('⚠️ DEV MODE: Authentication disabled - logged in as admin')
+          }
+          return
+        }
+
         // Wait for Supabase to recover session from localStorage
         const { data: { session: recoveredSession }, error } = await supabase.auth.getSession()
         
